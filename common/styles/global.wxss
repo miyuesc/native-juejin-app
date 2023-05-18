@@ -1,0 +1,64 @@
+.page-content {
+	width: 100%;
+	flex: 1;
+	overflow: hidden;
+	display: flex;
+	background-color: #f2f3f5;
+	flex-direction: column;
+	height: 100vh;
+}
+
+text {
+	color: #252933;
+}
+
+.swiper-box {
+	flex: 1;
+}
+
+.swiper-item {
+	flex: 1;
+	flex-direction: row;
+}
+
+.scroll-v {
+	flex: 1;
+	height: 100%;
+	flex-direction: column;
+	width: 750rpx;
+	width: 100%;
+	overflow: hidden;
+}
+
+.scroll-h {
+	width: 750rpx;
+	height: 80rpx;
+	background-color: #ffffff;
+	flex-direction: row;
+	white-space: nowrap;
+}
+
+.line-h {
+	height: 1rpx;
+	background-color: #eee;
+}
+
+.uni-tab-item {
+	display: inline-block;
+	flex-wrap: nowrap;
+	padding-left: 34rpx;
+	padding-right: 34rpx;
+}
+
+.uni-tab-item-title {
+	color: #252933;
+	font-size: 30rpx;
+	height: 80rpx;
+	line-height: 80rpx;
+	flex-wrap: nowrap;
+	white-space: nowrap;
+}
+
+.uni-tab-item-title-active {
+	color: #007AFF;
+}

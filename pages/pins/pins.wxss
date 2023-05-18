@@ -1,0 +1,108 @@
+/* pages/pins.wxss */
+@import "../../common/styles/global.wxss";
+
+page {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+}
+
+.line-h {
+    height: 1rpx;
+    background-color: #eee;
+}
+
+.pin-item {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 8px;
+    border-radius: 8px;
+    padding: 8px;
+    background-color: #fff;
+}
+
+.pin-author,
+.pin-content,
+.pin-image {
+    display: flex;
+    align-items: center;
+}
+
+.pin-author_icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.pin-author_info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-left: 12px;
+}
+.pin-author_username {
+    font-size: 16px;
+    font-weight: 700;
+    padding-left: 4px;
+    line-height: 20px;
+}
+.pin-author_label {
+    font-size: 12px;
+    font-weight: 200;
+    color: #909090;
+    line-height: 20px;
+}
+.pin-author_label text::after {
+    content: '·';
+    margin: 0 4px;
+}
+.pin-author_label text:last-child:after {
+    content: '';
+    margin: 0;
+}
+
+.pin-content {
+    font-size: 14px;
+}
+
+.pin-image {
+    display: flex;
+    flex-wrap: wrap;
+}
+.pin-image_item {
+    max-width: 30vw;
+    max-height: 30vw;
+    overflow: hidden;
+}
+.pin-image_item image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.loading-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    color: #999999;
+}
+
+.loading-text {
+    margin-left: 2px;
+    font-size: 16px;
+    color: #999999;
+}
+
+.loading-more {
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.loading-more-text {
+    font-size: 28rpx;
+    color: #999;
+}
