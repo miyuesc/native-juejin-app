@@ -20,6 +20,12 @@ const tabRequestMap = {
   follow: getFollowPins,
   mine: getMinePins,
 }
+const searchParamsMap = {
+  newest: { cursor: '0', "sort_type": 300 },
+  hotest: { cursor: '0', "sort_type": 200 },
+  follow: {},
+  mine: { 'user_id': '747323639208391' },
+}
 
 // pages/pins.js
 Page({
@@ -28,6 +34,19 @@ Page({
    * 页面的初始数据
    */
   data: {
+    tabBars: [{
+      name: '最新',
+      id: 'newest'
+    }, {
+      name: '热门',
+      id: 'hotest'
+    }, {
+      name: '关注',
+      id: 'follow'
+    }, {
+      name: '我的',
+      id: 'mine'
+    }],
     hasLogin: false,
     pinsListMap: {
       newest: {
@@ -47,19 +66,8 @@ Page({
     newsList: [],
     tabIndex: 0,
     activeTab: {},
-    tabBars: [{
-      name: '最新',
-      id: 'newest'
-    }, {
-      name: '热门',
-      id: 'hotest'
-    }, {
-      name: '关注',
-      id: 'follow'
-    }, {
-      name: '我的',
-      id: 'mine'
-    }],
+    show: false,
+    activeImg: ''
   },
 
   async getPinsData(tabId) {
@@ -73,7 +81,7 @@ Page({
       const {
         data,
         cursor
-      } = await tabRequestMap[tabId](currentPinsObj.cursor, '747323639208391');
+      } = await tabRequestMap[tabId]({ ...searchParamsMap[tabId], cursor: currentPinsObj.cursor });
 
       const dataArr = (data || []).map(pinItem => {
         return {
@@ -87,7 +95,7 @@ Page({
           pinContent: pinItem['msg_Info']['content'],
           pinImagesList: pinItem['msg_Info']['pic_list'],
           pinTime: convertTimeToHumanReadable(pinItem['msg_Info']['ctime'] * 1000),
-          pinMommentCount: pinItem['msg_Info']['momment_count'],
+          pinCommentCount: pinItem['msg_Info']['comment_count'],
           pinDiggCount: pinItem['msg_Info']['digg_count']
         }
       })
@@ -123,14 +131,12 @@ Page({
     })
   },
 
-  ontabtap(e) {
-    const { idx } = e.currentTarget.dataset || e.target.dataset;
-    this.switchTab(idx);
+  onTabClick(event) {
+    const { detail } = event;
+    console.log('click', detail)
+    this.switchTab(detail.name);
   },
-  ontabchange(e) {
-    const idx = e.target.current || e.detail.current;
-    this.switchTab(idx);
-  },
+
   switchTab(index) {
     if (this.data.tabIndex === index) {
       return;
@@ -148,11 +154,26 @@ Page({
     }
   },
 
+  previewImage(event) {
+    console.log('preview', event)
+    const { dataset } = event.currentTarget || event.target
+    this.setData({
+      show: true,
+      activeImg: dataset.img
+    })
+  },
+
+  onClickHide() {
+    this.setData({
+      show: false
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  onLoad() {
     this.setData({
       tabIndex: 0,
       activeTab: this.data.tabBars[0],
@@ -193,7 +214,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh() {
-
+    const activeTabId = this.data.activeTab.id;
+    console.log('reload', activeTabId)
+    this.assignPinsData(activeTabId, { data: [], cursor: '0' });
+    this.getPinsData(activeTabId).then(() => wx.stopPullDownRefresh());
   },
 
   /**

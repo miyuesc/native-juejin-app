@@ -1,0 +1,14 @@
+{
+  "name": "native-juejin-app",
+  "version": "1.0.0",
+  "description": "掘金小程序",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MiyueFE",
+  "license": "ISC",
+  "dependencies": {
+    "@vant/weapp": "^1.10.18"
+  }
+}

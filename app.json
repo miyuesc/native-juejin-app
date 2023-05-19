@@ -1,39 +1,43 @@
 {
-  "pages": [
-    "pages/pins/pins",
-    "pages/posts/posts",
-    "pages/books/books",
-    "pages/dashboard/dashboard"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "掘金创作者中心",
-    "navigationBarTextStyle": "black"
-  },
+	"pages": [
+		"pages/pins/pins",
+		"pages/posts/posts",
+		"pages/books/books",
+		"pages/dashboard/dashboard"
+	],
+	"window": {
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#fff",
+		"navigationBarTitleText": "掘金创作者中心",
+		"navigationBarTextStyle": "black"
+	},
 	"tabBar": {
 		"color": "#7A7E83",
 		"selectedColor": "#00aaff",
 		"borderStyle": "white",
 		"backgroundColor": "#ffffff",
-		"list": [{
-			"pagePath": "pages/pins/pins",
-			"iconPath": "static/icons/pins.png",
-			"selectedIconPath": "static/icons/pins-active.png"
-		}, {
-			"pagePath": "pages/posts/posts",
-			"iconPath": "static/icons/posts.png",
-			"selectedIconPath": "static/icons/posts-active.png"
-		}, {
-			"pagePath": "pages/books/books",
-			"iconPath": "static/icons/books.png",
-			"selectedIconPath": "static/icons/books-active.png"
-		}, {
-			"pagePath": "pages/dashboard/dashboard",
-			"iconPath": "static/icons/creator.png",
-			"selectedIconPath": "static/icons/creator-active.png"
-		}]
+		"list": [
+			{
+				"pagePath": "pages/pins/pins",
+				"iconPath": "static/icons/pins.png",
+				"selectedIconPath": "static/icons/pins-active.png"
+			},
+			{
+				"pagePath": "pages/posts/posts",
+				"iconPath": "static/icons/posts.png",
+				"selectedIconPath": "static/icons/posts-active.png"
+			},
+			{
+				"pagePath": "pages/books/books",
+				"iconPath": "static/icons/books.png",
+				"selectedIconPath": "static/icons/books-active.png"
+			},
+			{
+				"pagePath": "pages/dashboard/dashboard",
+				"iconPath": "static/icons/creator.png",
+				"selectedIconPath": "static/icons/creator-active.png"
+			}
+		]
 	},
-  "style": "v2",
-  "sitemapLocation": "sitemap.json"
+	"sitemapLocation": "sitemap.json"
 }
