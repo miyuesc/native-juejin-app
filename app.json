@@ -7,7 +7,7 @@
 	],
 	"window": {
 		"backgroundTextStyle": "light",
-		"navigationBarBackgroundColor": "#fff",
+		"navigationBarBackgroundColor": "#f2f3f5",
 		"navigationBarTitleText": "掘金创作者中心",
 		"navigationBarTextStyle": "black"
 	},
@@ -39,5 +39,13 @@
 			}
 		]
 	},
-	"sitemapLocation": "sitemap.json"
+	"sitemapLocation": "sitemap.json",
+	"usingComponents": {
+		"van-tab": "@vant/weapp/tab/index",
+		"van-tabs": "@vant/weapp/tabs/index",
+		"van-image": "@vant/weapp/image/index",
+		"van-overlay": "@vant/weapp/overlay/index",
+		"van-icon": "@vant/weapp/icon/index",
+		"van-skeleton": "@vant/weapp/skeleton/index"
+	}
 }

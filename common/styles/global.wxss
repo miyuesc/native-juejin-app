@@ -9,6 +9,7 @@
 
 text {
 	color: #252933;
+	font-size: 12px;
 }
 
 .preview-wrapper {
@@ -17,6 +18,11 @@ text {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.preview-wrapper movable-area,
+.preview-wrapper movable-view {
+	width: 94vw;
+	height: 94vh;
 }
 .overlay-img {
 	max-width: 94vw;

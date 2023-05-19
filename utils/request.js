@@ -17,10 +17,18 @@ export function getData(url, params) {
 				cookie: cookie
 			},
 			success: function(res) {
-				resolve(res.data)
+				if(res.data && res.data.err_no === 0) {
+					resolve(res.data)
+					return;
+				} 
+				wx.showToast({
+				  title: res.data.err_msg || '请求失败，请重试',
+				  icon: 'error'
+				})
+				reject(res.data)
 			},
 			fail: function(err) {
-				reject(err.errMsg)
+				reject(err.err_msg)
 			}
 		})
 	})
@@ -44,7 +52,15 @@ export function postData(url, data, params) {
 				cookie: cookie
 			},
 			success: function(res) {
-				resolve(res.data)
+				if(res.data && res.data.err_no === 0) {
+					resolve(res.data)
+					return;
+				} 
+				wx.showToast({
+				  title: res.data.err_msg || '请求失败，请重试',
+				  icon: 'error'
+				})
+				reject(res.data)
 			},
 			fail: function(err) {
 				reject(err.errMsg)

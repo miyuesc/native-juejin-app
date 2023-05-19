@@ -1,103 +1,113 @@
 <!-- pages/pins.wxml -->
 <view class="page-content pins-content">
-    <van-tabs animated swipeable sticky bind:click="onTabClick">
-        <van-tab wx:for="{{tabBars}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" title="{{item.name}}" name="{{idx}}">
-            <scroll-view class="scroll-v" scroll-y="{{true}}" enable-back-to-top="{{true}}" data-item="{{item}}" bind:scrolltolower="loadMore">
-                <view wx:for="{{pinsListMap[item.id].data}}" wx:key="id" wx:for-item="pinItem">
-                    <view class="pin-item">
-                        <view class="pin-author">
-                            <image class="pin-author_icon" src="{{pinItem.userIcon}}"></image>
-                            <view class="pin-author_info">
-                                <view class="pin-author_usernaem">{{pinItem.userName}}</view>
-                                <view class="pin-author_label">
-                                    <view wx:if="{{pinItem.userJobTitle}}">
-                                        {{pinItem.userJobTitle}}
-                                    </view>
-                                    <view wx:if="{{pinItem.userCompany}}">
-                                        {{pinItem.userCompany}}
-                                    </view>
-                                    <view>{{pinItem.pinTime}}</view>
-                                </view>
-                            </view>
-                        </view>
-                        <view class="pin-content">{{pinItem.pinContent}}</view>
-                        <view class="pin-image" wx:if="{{ pinItem.pinImagesList }}">
-                            <view class="pin-image_item" wx:for="{{pinItem.pinImagesList}}" wx:for-item="img" wx:key="img">
-                                <van-image src="{{img}}" data-img="{{img}}" width="100" height="100" fit="contain" lazy-load bind:click="previewImage" />
-                            </view>
-                            <view class="pin-image_fill-item"></view>
-                            <view class="pin-image_fill-item"></view>
-                            <view class="pin-image_fill-item"></view>
-                        </view>
-                        <view class="pin-info">
-                            <view class="pin-info_item pin-info-comment">
-                                <van-icon name="comment-o" />
-                                <text>{{pinItem.pinCommentCount}}</text>
-                            </view>
-                            <view class="pin-info_item pin-info-digg">
-                                <van-icon name="good-job-o" />
-                                <text>{{pinItem.pinDiggCount}}</text>
-                            </view>
-                        </view>
-                    </view>
+  <van-tabs
+    animated
+    swipeable
+    sticky
+    bind:click="onTabClick"
+  >
+    <van-tab
+      wx:for="{{tabBars}}"
+      wx:for-index="idx"
+      wx:for-item="item"
+      wx:key="idx"
+      title="{{item.name}}"
+      name="{{idx}}"
+    >
+      <scroll-view
+        class="scroll-v"
+        scroll-y="{{true}}"
+        enable-back-to-top="{{true}}"
+        data-item="{{item}}"
+        bind:scrolltolower="loadMore"
+      >
+        <view
+          wx:for="{{pinsListMap[item.id].data}}"
+          wx:key="id"
+          wx:for-item="pinItem"
+        >
+          <view class="pin-item">
+            <view class="pin-author">
+              <image class="pin-author_icon" src="{{pinItem.userIcon}}"></image>
+              <view class="pin-author_info">
+                <view class="pin-author_usernaem">{{pinItem.userName}}</view>
+                <view class="pin-author_label">
+                  <view wx:if="{{pinItem.userJobTitle}}">
+                    {{pinItem.userJobTitle}}
+                  </view>
+                  <view wx:if="{{pinItem.userCompany}}">
+                    {{pinItem.userCompany}}
+                  </view>
+                  <view>{{pinItem.pinTime}}</view>
                 </view>
-                <view class="loading-more" wx:if="{{pinsListMap[item.id].onLoading}}">
-                    <text class="loading-more-text">{{pinsListMap[item.id].loadingText}}</text>
-                </view>
-            </scroll-view>
-        </van-tab>
-    </van-tabs>
-    <van-overlay show="{{ show }}" bind:click="onClickHide">
-        <view class="preview-wrapper">
-            <van-image class="overlay-img" src="{{activeImg}}" width="94vw" height="94vh" fit="contain" lazy-load />
-        </view>
-    </van-overlay>
-    <!-- <scroll-view class="scroll-h" scroll-x="{{true}}">
-        <view class="uni-tab-item" wx:for="{{tabBars}}" wx:for-index="idx" wx:for-item="item" wx:key="idx">
-            <view class="uni-tab-item-title-active" wx:if="{{idx===tabIndex}}" data-idx="{{idx}}" bind:tap="ontabtap">
-                <text>{{item.name}}</text>
+              </view>
             </view>
-            <view class="uni-tab-item-title" data-idx="{{idx}}" wx:else bind:tap="ontabtap">
-                {{item.name}}
+            <view class="pin-content">{{pinItem.pinContent}}</view>
+            <view class="pin-image" wx:if="{{ pinItem.pinImagesList }}">
+              <view
+                class="pin-image_item"
+                wx:for="{{pinItem.pinImagesList}}"
+                wx:for-item="img"
+                wx:key="img"
+              >
+                <van-image
+                  src="{{img}}"
+                  data-img="{{img}}"
+                  width="100"
+                  height="100"
+                  fit="contain"
+                  lazy-load
+                  bind:click="previewImage"
+                />
+              </view>
+              <view class="pin-image_fill-item"></view>
+              <view class="pin-image_fill-item"></view>
+              <view class="pin-image_fill-item"></view>
             </view>
+            <view class="pin-topic" wx:if="{{pinItem.topicTitle}}">
+              <image class="pin-topic_icon" src="{{pinItem.topicIcon}}" />
+              <view class="pin-topic_name">{{pinItem.topicTitle}}</view>
+            </view>
+            <view class="pin-info">
+              <view class="pin-info_item pin-info-comment">
+                <van-icon name="comment-o" />
+                <text>{{pinItem.pinCommentCount}}</text>
+              </view>
+              <view class="pin-info_item pin-info-digg">
+                <van-icon name="good-job-o" />
+                <text>{{pinItem.pinDiggCount}}</text>
+              </view>
+            </view>
+          </view>
         </view>
-    </scroll-view> -->
-    <!-- <view class="line-h"></view> -->
-    <!-- <swiper class="swiper-box" current="{{tabIndex}}" duration="{{500}}" bind:change="ontabchange">
-        <swiper-item class="swiper-item" wx:for="{{tabBars}}" wx:for-item="item" wx:for-index="idx" wx:key="idx">
-            <scroll-view class="scroll-v" scroll-y="{{true}}" enable-back-to-top="{{true}}" data-item="{{item}}" bind:scrolltolower="loadMore">
-                <view wx:for="{{pinsListMap[item.id].data}}" wx:key="id" wx:for-item="pinItem">
-                    <view class="pin-item">
-                        <view class="pin-author">
-                            <image class="pin-author_icon" src="{{pinItem.userIcon}}"></image>
-                            <view class="pin-author_info">
-                                <view class="pin-author_usernaem">{{pinItem.userName}}</view>
-                                <view class="pin-author_label">
-                                    <view wx:if="{{pinItem.userJobTitle}}">
-                                        {{pinItem.userJobTitle}}
-                                    </view>
-                                    <view wx:if="{{pinItem.userCompany}}">
-                                        {{pinItem.userCompany}}
-                                    </view>
-                                    <view>{{pinItem.pinTime}}</view>
-                                </view>
-                            </view>
-                        </view>
-                        <view class="pin-content">{{pinItem.pinContent}}</view>
-                        <view class="pin-image" wx:if="{{ pinItem.pinImagesList }}">
-                            <view class="pin-image_item" wx:for="{{pinItem.pinImagesList}}" wx:for-item="img" wx:key="img">
-                                <van-image width="100" height="100" lazy-load src="{{img}}" />
-                            </view>
-                            <view class="pin-image_fill-item"></view>
-                            <view class="pin-image_fill-item"></view>
-                            <view class="pin-image_fill-item"></view>
-                        </view>
-                    </view>
-                </view>
-                <view class="loading-more" wx:if="{{pinsListMap[item.id].onLoading}}">
-                    <text class="loading-more-text">{{pinsListMap[item.id].loadingText}}</text>
-                </view>
-            </scroll-view>
-        </swiper-item>
-    </swiper> -->
+        <view class="loading-more" wx:if="{{pinsListMap[item.id].onLoading}}">
+          <text class="loading-more-text">{{pinsListMap[item.id].loadingText}}</text>
+        </view>
+      </scroll-view>
+    </van-tab>
+  </van-tabs>
+  <van-overlay show="{{ show }}" catch:click="onClickHide">
+    <view class="preview-wrapper">
+      <!-- <movable-area width="100%" height="100%">
+                <movable-view scale-min="0.5" scale-max="3" damping="2" inertia scale out-of-bounds>
+                    <image class="overlay-img" src="{{activeImg}}" mode='aspectFit' lazy-load show-menu-by-longpress />
+                </movable-view>
+            </movable-area> -->
+      <view
+        class="img"
+        bind:touchstart="touchstartCallback"
+        bind:touchmove="touchmoveCallback"
+        bind:touchend="touchendCallback"
+      >
+        <image
+          catch:click
+          style="transform:translate({{stv.offsetX}}px, {{stv.offsetY}}px) scale({{stv.scale}});"
+          mode='aspectFit'
+          src="{{activeImg}}"
+        ></image>
+      </view>
+      <!-- <van-image class="overlay-img" src="{{activeImg}}" width="94vw" height="94vh" fit="contain" lazy-load show-menu-by-longpress /> -->
+    </view>
+  </van-overlay>
 </view>
+

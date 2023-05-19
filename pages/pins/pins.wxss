@@ -12,6 +12,11 @@ page {
     background-color: #eee;
 }
 
+.scroll-v {
+    margin-top: 8px;
+    height: calc(100vh - 60px);
+}
+
 .pin-item {
     display: flex;
     flex-direction: column;
@@ -22,11 +27,23 @@ page {
     background-color: #fff;
 }
 
+.pin-item:first-child {
+    margin-top: 0;
+}
+
 .pin-author,
 .pin-content,
+.pin-topic,
 .pin-image {
     display: flex;
     align-items: center;
+}
+
+.pin-content,
+.pin-topic,
+.pin-info,
+.pin-image {
+    margin-top: 8px;
 }
 
 .pin-author_icon {
@@ -57,22 +74,26 @@ page {
     overflow: hidden;
     flex-wrap: nowrap;
 }
+.pin-author_label view {
+    overflow: hidden;
+    white-space: nowrap;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+}
 .pin-author_label view::after {
     content: '·';
     margin: 0 4px;
 }
-.pin-author_label view:last-child:after {
+.pin-author_label view:last-child::after {
     content: '';
     margin: 0;
 }
 
 .pin-content {
     font-size: 14px;
-    margin-top: 8px;
 }
 
 .pin-image {
-    margin-top: 8px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -91,11 +112,36 @@ page {
     max-height: 100%;
 }
 
-.pin-info {
+.pin-topic {
+    width: fit-content;
+    justify-content: center;
+    padding: 2px 12px;
+    background-color: #eaf2ff;
+    font-size: 12px;
+    line-height: 20px;
+    color: #1e80ff;
+    border-radius: 50px;
+}
+.pin-topic_icon {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 4px;
+}
+
+.pin-info,
+.pin-info_item {
     display: flex;
-    border-top: 1px;
+    align-items: center;
     justify-content: space-around;
     color: #909090;
+}
+.pin-info {
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+}
+.pin-info_item {
+    width: 40px;
 }
 .pin-info_item text {
     color: #909090;
