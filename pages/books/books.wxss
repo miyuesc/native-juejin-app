@@ -1,1 +1,111 @@
 /* pages/books/books.wxss */
+.books-list {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f3f5;
+}
+
+.book-item {
+    display: flex;
+    padding: 8px;
+    background-color: #fff;
+    border-radius: 8px;
+}
+
+.book-item+.book-item {
+    margin-top: 8px;
+}
+
+.book-item_left {
+    position: relative;
+    border-radius: 4px;
+}
+
+.book_update-tag {
+    position: absolute;
+    right: -2px;
+    top: -2px;
+    z-index: 10;
+    background-color: #ff5132;
+    border-radius: 0 2px 2px 0;
+    padding: 2px;
+    font-size: 8px;
+    color: #fff;
+}
+
+.book-item_right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 8px;
+}
+
+.book_book-name {
+    font-size: 16px;
+    font-weight: 700;
+    overflow: hidden;
+    word-break: break-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book_author-infos {
+    display: flex;
+    overflow: hidden;
+    align-items: center;
+}
+
+.book_author_icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.book_author_info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-left: 12px;
+}
+
+.book_author_username {
+    font-size: 14px;
+}
+
+.book_author_label {
+    font-weight: 200;
+    color: #909090;
+    display: flex;
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
+
+.book_author_label view {
+    font-size: 12px;
+    overflow: hidden;
+    white-space: nowrap;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+}
+
+.book_author_label view::after {
+    content: '·';
+    margin: 0 4px;
+}
+
+.book_author_label view:last-child::after {
+    content: '';
+    margin: 0;
+}
+
+.book_summary {
+    font-size: 10px;
+    color: #999;
+    flex: 1;
+}

@@ -1,2 +1,40 @@
-<!--pages/books/books.wxml-->
-<text>pages/books/books.wxml</text>
+<!-- pages/books/books.wxml -->
+<view class="page-content books-content">
+  <view class="books-list">
+    <view
+      class="book-item"
+      wx:for="{{booksList}}"
+      wx:for-item="book"
+      wx:key="bookId"
+    >
+      <view class="book-item_left">
+        <van-image
+          src="{{book.bookImage}}"
+          width="100"
+          height="140"
+          fit="fill"
+        ></van-image>
+        <view wx:if="{{book.isNew}}" class="book_update-tag">有更新</view>
+      </view>
+      <view class="book-item_right">
+        <view class="book_book-name">{{book.bookName}}</view>
+        <view class="book_author-infos">
+          <image class="book_author_icon" src="{{book.bookAuthorIcon}}"></image>
+          <view class="book_author_info">
+            <view class="book_author_username">{{book.bookAuthor}}</view>
+            <view class="book_author_label">
+              <view wx:if="{{book.bookAuthorCompany}}">{{book.bookAuthorCompany}}</view>
+              <view wx:if="{{book.bookAuthorJobTitle}}">{{book.bookAuthorJobTitle}}</view>
+            </view>
+          </view>
+        </view>
+        <view class="book_summary">{{book.bookSummary}}</view>
+        <view class="book_but-info">
+          <text>{{book.statusLabel}}</text>
+          <text wx:if="{{book.borrowingExpireTime}}">{{book.borrowingExpireTime}}到期</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
