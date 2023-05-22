@@ -63,3 +63,16 @@ export function convertTimeToHumanReadable(dateTime) {
     return _date.getFullYear() + "年" + _date.getMonth() + "月" + _date.getDate() + "日";
   }
 }
+
+export function formatImg (htmlContent) {
+  var newContent = htmlContent.replace(/<img[^>]*>/gi, (match) => {
+    let processed=null;
+    if(!match.match(/style=\"(.*)\"/gi)){
+      processed=match.replace(/\<img/g, '<img style="max-width:100%;height:auto;display:block"');
+    }else{
+      processed = match.replace(/style=\"(.*)\"/gi, 'style="max-width:100%;height:auto;display:block"');
+    }
+    return processed;
+  });
+  return newContent;
+} 

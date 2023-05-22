@@ -15,17 +15,20 @@ Page({
    * 页面的初始数据
    */
   data: {
+    loading: false,
     booksList: []
   },
 
   // methods
   async getBooks() {
     try {
-      const { data } = await getBooksList()
-      console.log(data)
-      this.setData({ booksList: data.map(this.getBookInfo) })
+      this.setData({ loading: true });
+      const { data } = await getBooksList();
+      this.setData({ booksList: data.map(this.getBookInfo) });
     } catch (e) {
-      this.setData({ booksList: [] })
+      this.setData({ booksList: [] });
+    } finally {
+      this.setData({ loading: false });
     }
   },
 
@@ -50,6 +53,14 @@ Page({
       readingProgress: item.reading_progress.reading_progress,
       borrowingExpireTime: borrowingExpireTime === 0 ? '' : new Date(borrowingExpireTime * 1000).toLocaleDateString()
     }
+  },
+
+  pageToDetail(e) {
+    const { bookItem } = e.currentTarget.dataset || e.target.dataset;
+    console.log('bookItem', bookItem)
+    wx.navigateTo({
+      url: `../bookDetails/bookDetails?bookId=${bookItem.bookId}`,
+    })
   },
 
   /**

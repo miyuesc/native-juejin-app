@@ -24,7 +24,7 @@ const searchParamsMap = {
   newest: { cursor: '0', "sort_type": 300 },
   hotest: { cursor: '0', "sort_type": 200 },
   follow: {},
-  mine: { 'user_id': '747323639208391' },
+  mine: { 'user_id': '747323639208391', "sort_type": 4 },
 }
 
 // pages/pins.js

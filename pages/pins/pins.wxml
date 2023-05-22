@@ -5,6 +5,7 @@
     swipeable
     sticky
     bind:click="onTabClick"
+    bind:change="onTabClick"
   >
     <van-tab
       wx:for="{{tabBars}}"
@@ -95,12 +96,12 @@
             </movable-area> -->
       <view
         class="img"
-        bind:touchstart="touchstartCallback"
-        bind:touchmove="touchmoveCallback"
-        bind:touchend="touchendCallback"
+        catch:touchstart="touchstartCallback"
+        catch:touchmove="touchmoveCallback"
+        catch:touchend="touchendCallback"
       >
         <image
-          catch:click
+          catch:tap
           style="transform:translate({{stv.offsetX}}px, {{stv.offsetY}}px) scale({{stv.scale}});"
           mode='aspectFit'
           src="{{activeImg}}"

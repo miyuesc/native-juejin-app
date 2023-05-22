@@ -3,6 +3,7 @@
 		"pages/pins/pins",
 		"pages/posts/posts",
 		"pages/books/books",
+		"pages/bookDetails/bookDetails",
 		"pages/dashboard/dashboard"
 	],
 	"window": {
@@ -46,6 +47,7 @@
 		"van-image": "@vant/weapp/image/index",
 		"van-overlay": "@vant/weapp/overlay/index",
 		"van-icon": "@vant/weapp/icon/index",
-		"van-skeleton": "@vant/weapp/skeleton/index"
+		"van-skeleton": "@vant/weapp/skeleton/index",
+		"van-sticky": "@vant/weapp/sticky/index"
 	}
 }

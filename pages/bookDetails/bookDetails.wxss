@@ -1,0 +1,10 @@
+.page-content {
+    display: flex;
+    flex-direction: column;
+}
+.book-details_content {
+    margin-top: 8px;
+    background-color: #fff;
+    padding: 8px;
+    font-size: 12px;
+}
