@@ -9,5 +9,5 @@ export function getBookDetails(booklet_id) {
 }
 
 export function getBookSection(section_id) {
-	return postData('/booklet_api/v1/booklet/bookletshelflist', {section_id})
+	return postData('/booklet_api/v1/section/get', {section_id})
 }

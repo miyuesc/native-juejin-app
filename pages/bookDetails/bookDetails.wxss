@@ -1,10 +1,18 @@
 .page-content {
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
 }
 .book-details_content {
-    margin-top: 8px;
+    flex: 1;
     background-color: #fff;
     padding: 8px;
     font-size: 12px;
+    overflow-y: auto;
+}
+.book-toolbar {
+    height: fit-content;
+    box-sizing: border-box;
+    padding: 8px 8px 20px 8px;
 }

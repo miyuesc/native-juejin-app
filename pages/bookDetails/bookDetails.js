@@ -1,5 +1,11 @@
 import { getBookDetails } from "../../requests/books"
-import { formatImg } from "../../utils/util"
+import { formatRichText } from "../../utils/util"
+
+const bookDetails = {
+  sections: null,
+  currentSectionId: '0',
+
+}
 
 const pageOptions = {
   // 页面数据
@@ -13,10 +19,20 @@ const pageOptions = {
     try {
       const { data } = await getBookDetails(bookId)
       console.log(data)
-      this.setData({ introduction: formatImg(data.introduction.content) })
+      this.setData({ introduction: formatRichText(data.introduction.content) })
+      bookDetails.sections = data.sections
+      bookDetails.currentSectionId = data.booklet.reading_progress.last_section_id
     } catch (e) {
       this.setData({ introduction: '' })
     }
+  },
+  goToContinueReading() {
+    wx.navigateTo({
+      url: '../bookReading/bookReading',
+      success(res) {
+        res.eventChannel.emit('continueReading', bookDetails)
+      }
+    })
   },
 
   // 页面载入时

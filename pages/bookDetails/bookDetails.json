@@ -4,5 +4,7 @@
   "enablePullDownRefresh": false,
   "onReachBottomDistance": 50,
   "disableScroll": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "mp-html": "mp-html"
+  }
 }

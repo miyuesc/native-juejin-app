@@ -1,10 +1,15 @@
 <view class="page-content">
-  <van-sticky>
-    <view class="book-detail_header"></view>
-    <view class="book-detail_btns"></view>
-  </van-sticky>
   <view class="book-details_content">
-    <rich-text nodes="{{introduction}}"></rich-text>
+    <mp-html content="{{introduction}}" externstyle="{{richTextStyles}}"></mp-html>
+    <!-- <rich-text nodes="{{introduction}}"></rich-text> -->
+  </view>
+  <view class="book-toolbar">
+    <van-button
+      type="info"
+      block
+      bind:click="goToContinueReading"
+    >继续阅读
+    </van-button>
   </view>
 </view>
 

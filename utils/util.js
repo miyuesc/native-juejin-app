@@ -64,15 +64,37 @@ export function convertTimeToHumanReadable(dateTime) {
   }
 }
 
-export function formatImg (htmlContent) {
+export function formatImg(htmlContent) {
   var newContent = htmlContent.replace(/<img[^>]*>/gi, (match) => {
-    let processed=null;
-    if(!match.match(/style=\"(.*)\"/gi)){
-      processed=match.replace(/\<img/g, '<img style="max-width:100%;height:auto;display:block"');
-    }else{
+    let processed = null;
+    if (!match.match(/style=\"(.*)\"/gi)) {
+      processed = match.replace(/\<img/g, '<img style="max-width:100%;height:auto;display:block"');
+    } else {
       processed = match.replace(/style=\"(.*)\"/gi, 'style="max-width:100%;height:auto;display:block"');
     }
     return processed;
   });
   return newContent;
-} 
+}
+
+export function formatHeaderTag(htmlContent) {
+  return htmlContent.replace(/<h([1-6])([^>]*)>(.*?)<\/h[1-6]>/g, '<view class="title-$1"$2>$3</view>');
+}
+
+export function formatPTag(htmlContent) {
+  return htmlContent.replace(/<p([^>]*)>(.*?)<\/p>/g, '<view class="_p"$1>$2</view>');
+}
+
+export function formatBlockquoteTag(htmlContent) {
+  return htmlContent.replace(/<blockquote([^>]*)>((?:\s*<(p|a|span|h([1-6]))[^>]*>.*?<\/(p|a|span|h([1-6]))>\s*)+)<\/blockquote>/g, '<view class="_blockquote"$1>$2</view>');
+}
+
+export function formatListTag(htmlContent) {
+  return htmlContent.replace(/<(ol|ul)[^>]*>((?:\s*<li[^>]*>.*?<\/li>\s*)+)<\/\1>/g, function (match, p1, p2) {
+    return '<view class="' + p1 + '-list">' + p2.replace(/<li[^>]*>(.*?)<\/li>/g, '<view class="list-item">$1</view>') + '</view>';
+  });
+}
+
+export function formatRichText(richTextContent) {
+  return formatImg(formatPTag(formatHeaderTag(formatBlockquoteTag(formatListTag(richTextContent)))))
+}

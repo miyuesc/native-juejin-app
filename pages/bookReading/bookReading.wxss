@@ -1,0 +1,4 @@
+/* pages/bookReading.wxss */
+.page-content p {
+    color: red;
+}
