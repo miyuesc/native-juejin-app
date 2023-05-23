@@ -1,10 +1,6 @@
 /* pages/pins.wxss */
-@import "../../common/styles/global.wxss";
-
-page {
-    width: 100%;
-    min-height: 100%;
-    display: flex;
+.pins-content {
+    background-color: #efefef;
 }
 
 .line-h {

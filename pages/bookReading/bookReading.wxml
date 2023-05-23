@@ -1,4 +1,4 @@
-<!--pages/bookReading.wxml-->
+<!-- pages/bookReading.wxml -->
 <view class="page-content reading-page">
   <view class="section-content">
     <mp-html
@@ -11,7 +11,23 @@
     <!-- <rich-text nodes="{{currentSectionContent}}"></rich-text> -->
   </view>
   <view class="tabbar">
-
+    <view class="tabbar-btn" wx:if="{{currentSectionIndex > 0}}">
+      <van-icon
+        name="arrow-left"
+        bind:tap="lastSection"
+        bind:click="lastSection"
+      />
+    </view>
+    <view class="tabbar-btn">
+      <van-icon name="bars" />
+    </view>
+    <view
+      class="tabbar-btn"
+      bind:tap="nextSection"
+      bind:click="nextSection"
+    >
+      <van-icon name="arrow" />
+    </view>
   </view>
 </view>
 

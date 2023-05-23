@@ -10,19 +10,61 @@ Page({
   data: {
     bookSections: [],
     currentSectionId: '',
+    currentSectionIndex: 0,
     currentSectionContent: '',
     richTextStyles
   },
   // methods
   async getScetionDetails(sectionId) {
     try {
-      const { data } = await getBookSection(sectionId)
-      this.setData({ currentSectionContent: formatRichText(data.section.content) })
+      console.log('get', this.data.bookSections.length)
+      if (this.data.bookSections && this.data.bookSections.length) {
+        console.log('request', this.data.bookSections.length)
+        let idx = 0
+        if (sectionId !== '0') {
+          idx = this.data.bookSections.findIndex(d => d.section_id === sectionId)
+        }
+        const { data } = await getBookSection(sectionId)
+        wx.setNavigationBarTitle({ title: data.section.draft_title })
+        this.setData({
+          currentSectionId: sectionId,
+          currentSectionContent: formatRichText(data.section.content),
+          currentSectionIndex: idx
+        })
+      } else {
+        throw new Error('empty sections')
+      }
     } catch (e) {
       this.setData({
         bookSections: [],
+        currentSectionIndex: 0,
         currentSectionContent: '',
         currentSectionId: ''
+      })
+    }
+  },
+  nextSection() {
+    const { currentSectionIndex, bookSections } = this.data;
+    console.log('nextSection', currentSectionIndex, bookSections.length)
+    if (currentSectionIndex > bookSections.length - 1) {
+      const nextSectionId = bookSections[currentSectionIndex + 1].section_id
+      this.getScetionDetails(nextSectionId)
+    } else {
+      wx.showToast({
+        title: '已经是最后一章',
+        icon: 'info'
+      })
+    }
+  },
+  lastSection() {
+    console.log('lastSection')
+    if (this.data.currentSectionIndex > 0) {
+      const nextSectionId = this.data.bookSections[this.data.currentSectionIndex - 1].section_id
+      this.getScetionDetails(nextSectionId)
+    } else {
+      wx.showToast({
+        title: '已经是第一章',
+        icon: 'info'
       })
     }
   },
@@ -35,8 +77,7 @@ Page({
     eventChannel.on('continueReading', (data) => {
       console.log(data)
       this.setData({
-        bookSections: data.sections,
-        currentSectionId: data.currentSectionId
+        bookSections: data.sections
       })
       this.getScetionDetails(data.currentSectionId)
     })

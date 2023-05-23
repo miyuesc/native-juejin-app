@@ -81,12 +81,20 @@ export function formatHeaderTag(htmlContent) {
   return htmlContent.replace(/<h([1-6])([^>]*)>(.*?)<\/h[1-6]>/g, '<view class="title-$1"$2>$3</view>');
 }
 
+export function formatPreTag(htmlContent) {
+  return htmlContent.replace(/<pre(([\s\S])*?)<\/p>/g, '<view class="_pre"$1</view>');
+}
+
 export function formatPTag(htmlContent) {
-  return htmlContent.replace(/<p([^>]*)>(.*?)<\/p>/g, '<view class="_p"$1>$2</view>');
+  return htmlContent.replace(/<p(([\s\S])*?)<\/p>/g, '<view class="_p"$1</view>');
+}
+
+export function formatDivTag(htmlContent) {
+  return htmlContent.replace(/<div(([\s\S])*?)<\/div>/g, '<view class="_div"$1</view>');
 }
 
 export function formatBlockquoteTag(htmlContent) {
-  return htmlContent.replace(/<blockquote([^>]*)>((?:\s*<(p|a|span|h([1-6]))[^>]*>.*?<\/(p|a|span|h([1-6]))>\s*)+)<\/blockquote>/g, '<view class="_blockquote"$1>$2</view>');
+  return htmlContent.replace(/<blockquote(([\s\S])*?)<\/blockquote>/g, '<view class="_blockquote"$1</view>');
 }
 
 export function formatListTag(htmlContent) {
@@ -96,5 +104,14 @@ export function formatListTag(htmlContent) {
 }
 
 export function formatRichText(richTextContent) {
-  return formatImg(formatPTag(formatHeaderTag(formatBlockquoteTag(formatListTag(richTextContent)))))
+  richTextContent = formatHeaderTag(richTextContent)
+  richTextContent = formatBlockquoteTag(richTextContent)
+  richTextContent = formatImg(richTextContent)
+  richTextContent = formatPreTag(richTextContent)
+  richTextContent = formatListTag(richTextContent)
+  richTextContent = formatPTag(richTextContent)
+  richTextContent = formatDivTag(richTextContent)
+
+  console.log(richTextContent)
+  return richTextContent
 }
