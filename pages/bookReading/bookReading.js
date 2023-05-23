@@ -13,13 +13,16 @@ Page({
     bookSections: [],
     currentSectionId: '',
     currentSectionIndex: 0,
-    currentSectionContent: '',
+    currentSectionContent: null,
     richTextStyles
   },
   // methods
   async getScetionDetails(sectionId) {
     try {
-      console.log('get', this.data.bookSections.length)
+      wx.showLoading({
+        title: '加载中...',
+        mask: true
+      })
       if (this.data.bookSections && this.data.bookSections.length) {
         console.log('request', this.data.bookSections.length)
         let idx = 0
@@ -28,16 +31,19 @@ Page({
         }
         const { data } = await getBookSection(sectionId)
         wx.setNavigationBarTitle({ title: data.section.draft_title })
+        const mdObj = app.towxml(data.section.markdown_show, 'markdown', {
+          tap(ev) {
+            const { data } = ev.currentTarget.dataset || ev.target.dataset
+            wx.previewImage({
+              urls: (mdObj._images || []).map(img => img.src),
+              current: data.attrs.src
+            })
+          }
+        })
         this.setData({
           currentSectionId: sectionId,
           // currentSectionContent: formatRichText(data.section.content),
-          currentSectionContent: app.towxml(data.section.markdown_show, 'markdown', {
-            events: {
-              tap(a, b) {
-                console.log(a, b)
-              }
-            }
-          }),
+          currentSectionContent: mdObj,
           currentSectionIndex: idx
         })
       } else {
@@ -50,11 +56,13 @@ Page({
         currentSectionContent: '',
         currentSectionId: ''
       })
+    } finally {
+      await wx.hideLoading()
+      await wx.pageScrollTo({ scrollTop: 0 })
     }
   },
   nextSection() {
     const { currentSectionIndex, bookSections } = this.data;
-    console.log('nextSection', 'currentSectionIndex', currentSectionIndex, 'bookSections length', bookSections.length)
     if (currentSectionIndex < bookSections.length - 1) {
       const nextSectionId = bookSections[currentSectionIndex + 1].section_id
       this.getScetionDetails(nextSectionId)

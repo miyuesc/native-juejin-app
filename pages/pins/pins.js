@@ -131,7 +131,6 @@ Page({
     }
   },
   loadMore(e) {
-    console.log(e.currentTarget.dataset)
     const { item } = e.currentTarget.dataset || e.target.dataset;
     this.getPinsData(item.id);
   },
@@ -149,7 +148,6 @@ Page({
 
   onTabClick(event) {
     const { detail } = event;
-    console.log('click', detail)
     this.switchTab(detail.name);
   },
 

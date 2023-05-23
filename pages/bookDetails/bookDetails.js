@@ -17,6 +17,10 @@ const pageOptions = {
   // methods
   async getBookDetails(bookId) {
     try {
+      wx.showLoading({
+        title: '加载中...',
+        mask: true
+      })
       const { data } = await getBookDetails(bookId)
       wx.setNavigationBarTitle({ title: data.booklet.base_info.title })
       // this.setData({ introduction: formatRichText(data.introduction.content) })
@@ -38,6 +42,9 @@ const pageOptions = {
       bookDetails.currentSectionId = data.booklet.reading_progress.last_section_id
     } catch (e) {
       this.setData({ introduction: '' })
+    } finally {
+      await wx.pageScrollTo({ scrollTop: 0 })
+      await wx.hideLoading()
     }
   },
   goToContinueReading() {
