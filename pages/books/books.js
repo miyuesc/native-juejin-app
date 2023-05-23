@@ -57,7 +57,6 @@ Page({
 
   pageToDetail(e) {
     const { bookItem } = e.currentTarget.dataset || e.target.dataset;
-    console.log('bookItem', bookItem)
     wx.navigateTo({
       url: `../bookDetails/bookDetails?bookId=${bookItem.bookId}`,
     })

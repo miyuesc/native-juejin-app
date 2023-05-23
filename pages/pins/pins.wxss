@@ -87,6 +87,7 @@
 
 .pin-content {
     font-size: 14px;
+    word-break: break-word;
 }
 
 .pin-image {

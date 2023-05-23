@@ -2,6 +2,8 @@ import { getBookSection } from "../../requests/books"
 import { formatRichText } from "../../utils/util"
 import richTextStyles from "../../common/config/richTextStyles"
 
+const app = getApp();
+
 // pages/bookReading.js
 Page({
   /**
@@ -28,7 +30,14 @@ Page({
         wx.setNavigationBarTitle({ title: data.section.draft_title })
         this.setData({
           currentSectionId: sectionId,
-          currentSectionContent: formatRichText(data.section.content),
+          // currentSectionContent: formatRichText(data.section.content),
+          currentSectionContent: app.towxml(data.section.markdown_show, 'markdown', {
+            events: {
+              tap(a, b) {
+                console.log(a, b)
+              }
+            }
+          }),
           currentSectionIndex: idx
         })
       } else {
@@ -45,8 +54,8 @@ Page({
   },
   nextSection() {
     const { currentSectionIndex, bookSections } = this.data;
-    console.log('nextSection', currentSectionIndex, bookSections.length)
-    if (currentSectionIndex > bookSections.length - 1) {
+    console.log('nextSection', 'currentSectionIndex', currentSectionIndex, 'bookSections length', bookSections.length)
+    if (currentSectionIndex < bookSections.length - 1) {
       const nextSectionId = bookSections[currentSectionIndex + 1].section_id
       this.getScetionDetails(nextSectionId)
     } else {

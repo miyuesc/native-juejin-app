@@ -1,13 +1,14 @@
 <!-- pages/bookReading.wxml -->
 <view class="page-content reading-page">
   <view class="section-content">
-    <mp-html
+    <towxml nodes="{{currentSectionContent}}" />
+    <!-- <mp-html
       content="{{currentSectionContent}}"
       lazy-load
       scroll-table
       selectable
       set-title
-    ></mp-html>
+    ></mp-html> -->
     <!-- <rich-text nodes="{{currentSectionContent}}"></rich-text> -->
   </view>
   <view class="tabbar">

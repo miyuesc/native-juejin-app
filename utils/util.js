@@ -103,6 +103,10 @@ export function formatListTag(htmlContent) {
   });
 }
 
+export function formatTableTag(htmlContent) {
+  return htmlContent.replace(/<table/g, '<table border="1" cellspacing="0" style="border-collapse:collapse; font-size: 14px;"')
+}
+
 export function formatRichText(richTextContent) {
   richTextContent = formatHeaderTag(richTextContent)
   richTextContent = formatBlockquoteTag(richTextContent)
@@ -111,7 +115,19 @@ export function formatRichText(richTextContent) {
   richTextContent = formatListTag(richTextContent)
   richTextContent = formatPTag(richTextContent)
   richTextContent = formatDivTag(richTextContent)
+  richTextContent = formatTableTag(richTextContent)
 
-  console.log(richTextContent)
   return richTextContent
+}
+
+export function getImages(str) {
+  const regex = /<img\s+src="([^"]+)"\s+alt="([^"]+)"\s*\/?>/g;
+  const images = [];
+  let match;
+
+  while ((match = regex.exec(str)) !== null) {
+      const src = match[1];
+      const alt = match[2];
+      images.push({ src, alt });
+  }
 }

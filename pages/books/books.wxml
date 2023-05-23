@@ -1,6 +1,24 @@
 <!-- pages/books/books.wxml -->
 <view class="page-content books-content">
   <van-skeleton
+    wx:if="{{loading}}"
+    title
+    avatar
+    row="3"
+  />
+  <van-skeleton
+    wx:if="{{loading}}"
+    title
+    avatar
+    row="3"
+  />
+  <van-skeleton
+    wx:if="{{loading}}"
+    title
+    avatar
+    row="3"
+  />
+  <van-skeleton
     title
     avatar
     row="3"

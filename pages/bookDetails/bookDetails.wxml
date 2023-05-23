@@ -1,6 +1,7 @@
 <view class="page-content">
   <view class="book-details_content">
-    <mp-html content="{{introduction}}" externstyle="{{richTextStyles}}"></mp-html>
+    <towxml nodes="{{introduction}}" />
+    <!-- <mp-html content="{{introduction}}" externstyle="{{richTextStyles}}"></mp-html> -->
     <!-- <rich-text nodes="{{introduction}}"></rich-text> -->
   </view>
   <view class="book-toolbar">

@@ -4,22 +4,36 @@ import { formatRichText } from "../../utils/util"
 const bookDetails = {
   sections: null,
   currentSectionId: '0',
-
 }
+
+const app = getApp();
 
 const pageOptions = {
   // 页面数据
   data: {
-    isFirstOnShow: true, // 是否为首次执行onShow
-    introduction: '', // 介绍详情
+    introduction: {}, // 介绍详情
     bookTitle: '',
   },
   // methods
   async getBookDetails(bookId) {
     try {
       const { data } = await getBookDetails(bookId)
-      console.log(data)
-      this.setData({ introduction: formatRichText(data.introduction.content) })
+      wx.setNavigationBarTitle({ title: data.booklet.base_info.title })
+      // this.setData({ introduction: formatRichText(data.introduction.content) })
+      const mdObj = app.towxml(data.introduction.markdown_show, 'markdown', {
+        events: {
+          tap(ev) {
+            const { data } = ev.currentTarget.dataset || ev.target.dataset
+            console.log(mdObj._images, data.attrs.src)
+            wx.previewImage({
+              urls: (mdObj._images || []).map(img => img.src),
+              current: data.attrs.src
+            })
+          }
+        }
+      })
+      console.log(mdObj)
+      this.setData({ introduction: mdObj })
       bookDetails.sections = data.sections
       bookDetails.currentSectionId = data.booklet.reading_progress.last_section_id
     } catch (e) {
@@ -46,18 +60,7 @@ const pageOptions = {
   // 页面准备好时
   onReady() { },
   // 页面显示时
-  onShow() {
-    console.log('onShow')
-    const { isFirstOnShow } = this.data
-
-    if (isFirstOnShow) {
-      // 首次执行时
-      this.setData({
-        isFirstOnShow: false,
-      })
-      return
-    }
-  },
+  onShow() { },
   // 页面隐藏时
   onHide() { },
   // 页面卸载时
