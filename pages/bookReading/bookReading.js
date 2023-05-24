@@ -1,8 +1,7 @@
 import { getBookSection } from "../../requests/books"
-import { formatRichText } from "../../utils/util"
-import richTextStyles from "../../common/config/richTextStyles"
+import { formatTimeStep } from "../../utils/util"
 
-const app = getApp();
+const app = getApp()
 
 // pages/bookReading.js
 Page({
@@ -10,11 +9,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    panelVisible: false,
     bookSections: [],
     currentSectionId: '',
     currentSectionIndex: 0,
-    currentSectionContent: null,
-    richTextStyles
+    currentSectionContent: null
   },
   // methods
   async getScetionDetails(sectionId) {
@@ -24,22 +23,36 @@ Page({
         mask: true
       })
       if (this.data.bookSections && this.data.bookSections.length) {
-        console.log('request', this.data.bookSections.length)
         let idx = 0
         if (sectionId !== '0') {
           idx = this.data.bookSections.findIndex(d => d.section_id === sectionId)
         }
         const { data } = await getBookSection(sectionId)
         wx.setNavigationBarTitle({ title: data.section.draft_title })
+
         const mdObj = app.towxml(data.section.markdown_show, 'markdown', {
-          tap(ev) {
-            const { data } = ev.currentTarget.dataset || ev.target.dataset
-            wx.previewImage({
-              urls: (mdObj._images || []).map(img => img.src),
-              current: data.attrs.src
-            })
+          events: {
+            tap(ev) {
+              const { data } = ev.currentTarget.dataset
+              const { tag, attrs } = data || {}
+              if (tag === 'img') {
+                wx.previewImage({
+                  urls: (mdObj._images || []).map(img => img.src),
+                  current: attrs.src
+                })
+                return;
+              }
+              if (tag === 'navigator') {
+                wx.setClipboardData({
+                  data: attrs.href,
+                  success: () =>
+                    wx.showToast({ title: '链接已复制' })
+                })
+              }
+            }
           }
         })
+
         this.setData({
           currentSectionId: sectionId,
           // currentSectionContent: formatRichText(data.section.content),
@@ -50,6 +63,7 @@ Page({
         throw new Error('empty sections')
       }
     } catch (e) {
+      console.log(e)
       this.setData({
         bookSections: [],
         currentSectionIndex: 0,
@@ -74,7 +88,6 @@ Page({
     }
   },
   lastSection() {
-    console.log('lastSection')
     if (this.data.currentSectionIndex > 0) {
       const nextSectionId = this.data.bookSections[this.data.currentSectionIndex - 1].section_id
       this.getScetionDetails(nextSectionId)
@@ -86,18 +99,28 @@ Page({
     }
   },
 
+  showTocPanel() {
+    this.setData({ panelVisible: true })
+  },
+  closePanel() {
+    this.setData({ panelVisible: false })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
     const eventChannel = this.getOpenerEventChannel()
-    eventChannel.on('continueReading', (data) => {
-      console.log(data)
-      this.setData({
-        bookSections: data.sections
+    if (eventChannel) {
+      eventChannel.on('continueReading', (data) => {
+        const bookSections = (data.sections || []).map(section => {
+          section.readingTime = formatTimeStep(section.read_time)
+          return section
+        })
+        console.log(data, bookSections)
+        this.setData({ bookSections }, () => this.getScetionDetails(data.currentSectionId))
+
       })
-      this.getScetionDetails(data.currentSectionId)
-    })
+    }
   },
 
   /**

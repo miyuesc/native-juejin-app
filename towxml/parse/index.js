@@ -84,7 +84,7 @@ const parse2 = require('./parse2/index'),
                     // obj._imgs.push(item)
                 }
                 if (item.type === 'text') {
-                    o.text = e.text = item.data;
+                    o.text = e.text = item.data.trim();
                 } else {
                     if (isRichTextContent) {
                         o.name = item.name;

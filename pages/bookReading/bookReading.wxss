@@ -1,6 +1,7 @@
 /* pages/bookReading.wxss */
 .reading-page {
     overflow: hidden;
+    position: relative;
 }
 .section-content {
     flex: 1;
@@ -19,4 +20,61 @@
     height: 54px;
     line-height: 40px;
     text-align: center;
+}
+
+.book-section-panel {
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    background-color: #fff;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+}
+.book-section-panel .section-item {
+    display: flex;
+    width: 100%;
+}
+.book-section-panel .section-item + .section-item {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid #eee;
+}
+.section-item_index {
+    width: 28px;
+    font-size: 16px;
+    text-align: left;
+    color: #666;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+.section-item_info {
+    display: flex;
+    flex-direction: column;
+}
+.section-item_title {
+    font-size: 16px;
+    color: 030303;
+}
+.section-item_status {
+    display: flex;
+    align-items: center;
+    padding-top: 4px;
+}
+.reading-end-tag,
+.has-update-tag,
+.reading-time {
+    font-size: 12px;
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+.reading-end-tag {
+    color: rgb(102, 102, 102);
+    background-color: rgba(102, 102, 102, 0.1);
+}
+.has-update-tag {
+    color: #ff976a;
+    background-color: rgba(255, 151, 106, 0.1);
 }

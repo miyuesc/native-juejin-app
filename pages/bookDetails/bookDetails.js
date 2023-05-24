@@ -1,5 +1,4 @@
 import { getBookDetails } from "../../requests/books"
-import { formatRichText } from "../../utils/util"
 
 const bookDetails = {
   sections: null,
@@ -22,22 +21,35 @@ const pageOptions = {
         mask: true
       })
       const { data } = await getBookDetails(bookId)
+
       wx.setNavigationBarTitle({ title: data.booklet.base_info.title })
+
       // this.setData({ introduction: formatRichText(data.introduction.content) })
       const mdObj = app.towxml(data.introduction.markdown_show, 'markdown', {
         events: {
           tap(ev) {
-            const { data } = ev.currentTarget.dataset || ev.target.dataset
-            console.log(mdObj._images, data.attrs.src)
-            wx.previewImage({
-              urls: (mdObj._images || []).map(img => img.src),
-              current: data.attrs.src
-            })
+            const { data } = ev.currentTarget.dataset
+            const { tag, attrs } = data || {}
+            if (tag === 'img') {
+              wx.previewImage({
+                urls: (mdObj._images || []).map(img => img.src),
+                current: attrs.src
+              })
+              return;
+            }
+            if (tag === 'navigator') {
+              wx.setClipboardData({
+                data: attrs.href,
+                success: () =>
+                  wx.showToast({ title: '链接已复制' })
+              })
+            }
           }
         }
       })
-      console.log(mdObj)
+
       this.setData({ introduction: mdObj })
+
       bookDetails.sections = data.sections
       bookDetails.currentSectionId = data.booklet.reading_progress.last_section_id
     } catch (e) {

@@ -126,8 +126,25 @@ export function getImages(str) {
   let match;
 
   while ((match = regex.exec(str)) !== null) {
-      const src = match[1];
-      const alt = match[2];
-      images.push({ src, alt });
+    const src = match[1];
+    const alt = match[2];
+    images.push({ src, alt });
   }
 }
+
+export function formatTimeStep(seconds, format = ['小时', '分', '秒']) {
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
+
+  const padZero = (num) => {
+    // return num < 10 ? '0' + num : num
+    return num;
+  };
+
+  const hoursStr = hours > 0 ? padZero(hours) + format[0] : '';
+  const minutesStr = padZero(minutes) + format[1];
+  const secondsStr = padZero(remainingSeconds) + format[2];
+
+  return hoursStr + minutesStr + secondsStr;
+};

@@ -1,5 +1,37 @@
 <!-- pages/bookReading.wxml -->
 <view class="page-content reading-page">
+  <van-popup
+    show="{{ panelVisible }}"
+    position="left"
+    custom-style="width: 80%;height: 100%"
+    root-portal
+    close-on-click-overlay
+    bind:close="closePanel"
+  >
+    <view class="book-section-panel">
+      <block
+        wx:for="{{bookSections}}"
+        wx:for-item="section"
+        wx:key="index"
+      >
+        <view class="section-item">
+          <view class="section-item_index">{{index + 1 }}</view>
+          <view class="section-item_info">
+            <view class="section-item_title">{{section.title}}</view>
+            <view class="section-item_status">
+              <view wx:if="{{section.reading_progress && section.reading_progress.reading_progress === 100}}" class="reading-end-tag">
+                已学完
+              </view>
+              <view wx:if="{{section.reading_progress && section.reading_progress.has_update === 2}}" class="has-update-tag">
+                有更新
+              </view>
+              <view class="reading-time">{{section.readingTime}}</view>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </van-popup>
   <view class="section-content">
     <towxml nodes="{{currentSectionContent}}" />
     <!-- <mp-html
@@ -19,7 +51,11 @@
         bind:click="lastSection"
       />
     </view>
-    <view class="tabbar-btn">
+    <view
+      class="tabbar-btn"
+      bind:tap="showTocPanel"
+      bind:click="showTocPanel"
+    >
       <van-icon name="bars" />
     </view>
     <view
