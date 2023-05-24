@@ -108,6 +108,9 @@ Page({
           pinCommentCount: pinItem['msg_Info']['comment_count'],
           pinDiggCount: pinItem['msg_Info']['digg_count'],
 
+          hotCommentId: pinItem['hot_comment']['comment_id'],
+          hotCommentBody: pinItem['hot_comment']?.comment_info?.comment_content,
+
           topicTitle: pinItem['topic']['title'],
           topicIcon: pinItem['topic']['icon'],
           topicId: pinItem['topic']['topic_id'],
@@ -178,10 +181,16 @@ Page({
   },
 
   previewImage(event) {
-    const { dataset } = event.currentTarget || event.target
-    console.log(dataset)
+    const { imagesList } = event.currentTarget.dataset || event.target.dataset
     wx.previewImage({
-      urls: dataset.imagesList
+      urls: imagesList
+    })
+  },
+
+  pageToPinDetail(event) {
+    const { pinDetail } = event.currentTarget.dataset || event.target.dataset
+    wx.navigateTo({
+      url: '../pinDetails/pinDetails',
     })
   },
 

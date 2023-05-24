@@ -1,11 +1,13 @@
 {
   "pages": [
     "pages/pins/pins",
+    "pages/pinDetails/pinDetails",
     "pages/posts/posts",
+    "pages/postReading/postReading",
     "pages/books/books",
     "pages/bookDetails/bookDetails",
-    "pages/dashboard/dashboard",
-    "pages/bookReading/bookReading"
+    "pages/bookReading/bookReading",
+    "pages/dashboard/dashboard"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,7 +45,7 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
-    "towxml":"/towxml/towxml",
+    "towxml": "/towxml/towxml",
     "van-button": "@vant/weapp/button/index",
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",

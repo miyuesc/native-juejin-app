@@ -1,39 +1,10 @@
 <!-- pages/pins.wxml -->
 <view class="page-content pins-content">
-  <van-tabs
-    animated
-    swipeable
-    sticky
-    bind:click="onTabClick"
-    bind:change="onTabClick"
-  >
-    <van-tab
-      wx:for="{{tabBars}}"
-      wx:for-index="idx"
-      wx:for-item="item"
-      wx:key="idx"
-      title="{{item.name}}"
-      name="{{idx}}"
-    >
-      <scroll-view
-        class="scroll-v"
-        scroll-y
-        refresher-enabled
-        enable-back-to-top
-        refresher-enabled
-        data-item="{{item}}"
-        refresher-threshold="{{100}}"
-        refresher-default-style="white"
-        refresher-triggered="{{pinsListMap[item.id].isLoading}}"
-        bind:refresherpulling="refreshData"
-        bind:scrolltolower="loadMore"
-      >
-        <view
-          wx:for="{{pinsListMap[item.id].data}}"
-          wx:key="id"
-          wx:for-item="pinItem"
-        >
-          <view class="pin-item">
+  <van-tabs animated swipeable sticky bind:click="onTabClick" bind:change="onTabClick">
+    <van-tab wx:for="{{tabBars}}" wx:for-index="idx" wx:for-item="item" wx:key="idx" title="{{item.name}}" name="{{idx}}">
+      <scroll-view class="scroll-v" scroll-y refresher-enabled enable-back-to-top refresher-enabled data-item="{{item}}" refresher-threshold="{{100}}" refresher-default-style="white" refresher-triggered="{{pinsListMap[item.id].isLoading}}" bind:refresherpulling="refreshData" bind:scrolltolower="loadMore">
+        <block wx:for="{{pinsListMap[item.id].data}}" wx:key="id" wx:for-item="pinItem">
+          <view class="pin-item" data-pin-detail="{{pinItem}}" catch:tap="pageToPinDetail">
             <view class="pin-author">
               <image class="pin-author_icon" src="{{pinItem.userIcon}}"></image>
               <view class="pin-author_info">
@@ -47,21 +18,8 @@
             </view>
             <text class="pin-content" user-select>{{pinItem.pinContent}}</text>
             <view class="pin-image" wx:if="{{ pinItem.pinImagesList }}">
-              <view
-                class="pin-image_item"
-                wx:for="{{pinItem.pinImagesList}}"
-                wx:for-item="img"
-                wx:key="img"
-              >
-                <van-image
-                  src="{{img}}"
-                  data-images-list="{{pinItem.pinImagesList}}"
-                  width="100"
-                  height="100"
-                  fit="contain"
-                  lazy-load
-                  bind:click="previewImage"
-                />
+              <view class="pin-image_item" wx:for="{{pinItem.pinImagesList}}" wx:for-item="img" wx:key="img">
+                <van-image src="{{img}}" data-images-list="{{pinItem.pinImagesList}}" width="100" height="100" fit="contain" lazy-load catch:click="previewImage" catch:tap />
               </view>
               <view class="pin-image_fill-item"></view>
               <view class="pin-image_fill-item"></view>
@@ -70,6 +28,14 @@
             <view class="pin-topic" wx:if="{{pinItem.topicTitle}}">
               <image class="pin-topic_icon" src="{{pinItem.topicIcon}}" />
               <view class="pin-topic_name">{{pinItem.topicTitle}}</view>
+            </view>
+            <view class="pin-hot-comment" wx:if="{{pinItem.hotCommentBody}}">
+              <view class="hot-comment_icon">
+                <image src="../../static/icons/hot-comment.png"></image>
+              </view>
+              <view class="hot-comment_body">
+                <text>{{pinItem.hotCommentBody}}</text>
+              </view>
             </view>
             <view class="pin-info">
               <view class="pin-info_item pin-info-comment">
@@ -82,7 +48,7 @@
               </view>
             </view>
           </view>
-        </view>
+        </block>
         <view class="loading-more" wx:if="{{pinsListMap[item.id].onLoading}}">
           <text class="loading-more-text">{{pinsListMap[item.id].loadingText}}</text>
         </view>
@@ -90,4 +56,3 @@
     </van-tab>
   </van-tabs>
 </view>
-
