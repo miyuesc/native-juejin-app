@@ -48,7 +48,6 @@
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
     "van-image": "@vant/weapp/image/index",
-    "van-overlay": "@vant/weapp/overlay/index",
     "van-icon": "@vant/weapp/icon/index",
     "van-skeleton": "@vant/weapp/skeleton/index",
     "van-sticky": "@vant/weapp/sticky/index"

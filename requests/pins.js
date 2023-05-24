@@ -1,7 +1,7 @@
 import { postData } from "../utils/request.js"
 
 export const defaultRequestConfig = {
-	limit: 20,
+	limit: 40,
 	"id_type": 4
 }
 

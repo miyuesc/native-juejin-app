@@ -53,26 +53,29 @@ Page({
           }
         })
 
-        this.setData({
-          currentSectionId: sectionId,
-          // currentSectionContent: formatRichText(data.section.content),
-          currentSectionContent: mdObj,
-          currentSectionIndex: idx
-        })
+        this.setData(
+          {
+            currentSectionId: sectionId,
+            // currentSectionContent: formatRichText(data.section.content),
+            currentSectionContent: mdObj,
+            currentSectionIndex: idx
+          },
+          () => {
+            wx.hideLoading()
+            setTimeout(() => wx.pageScrollTo({ scrollTop: 0, selector: '.reading-page > .section-content' }), 200)
+          }
+        )
       } else {
         throw new Error('empty sections')
       }
     } catch (e) {
-      console.log(e)
       this.setData({
         bookSections: [],
         currentSectionIndex: 0,
         currentSectionContent: '',
         currentSectionId: ''
       })
-    } finally {
-      await wx.hideLoading()
-      await wx.pageScrollTo({ scrollTop: 0 })
+      wx.hideLoading()
     }
   },
   nextSection() {
@@ -98,11 +101,16 @@ Page({
       })
     }
   },
+  changeToSection(e) {
+    this.closeTocPanel()
+    const { section } = e.currentTarget.dataset || e.target.dataset;
+    this.getScetionDetails(section.section_id)
+  },
 
   showTocPanel() {
     this.setData({ panelVisible: true })
   },
-  closePanel() {
+  closeTocPanel() {
     this.setData({ panelVisible: false })
   },
   /**
@@ -116,9 +124,8 @@ Page({
           section.readingTime = formatTimeStep(section.read_time)
           return section
         })
-        console.log(data, bookSections)
-        this.setData({ bookSections }, () => this.getScetionDetails(data.currentSectionId))
 
+        this.setData({ bookSections }, () => this.getScetionDetails(data.currentSectionId))
       })
     }
   },
