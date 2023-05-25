@@ -6,6 +6,8 @@ import {
 } from "../../requests/pins.js"
 import { convertTimeToHumanReadable } from "../../utils/util.js"
 
+const app = getApp()
+
 const emptyData = {
   data: [],
   cursor: '0',
@@ -20,11 +22,12 @@ const tabRequestMap = {
   follow: getFollowPins,
   mine: getMinePins,
 }
+
 const searchParamsMap = {
   newest: { cursor: '0', "sort_type": 300 },
   hotest: { cursor: '0', "sort_type": 200 },
   follow: {},
-  mine: { 'user_id': '747323639208391', "sort_type": 4 },
+  mine: { 'user_id': app.globalData.userInfo.user_id, "sort_type": 4 },
 }
 
 // pages/pins.js
@@ -62,20 +65,8 @@ Page({
         ...emptyData
       },
     },
-    scrollInto: "",
-    newsList: [],
     tabIndex: 0,
-    activeTab: {},
-    show: false,
-    activeImg: '',
-
-    stv: {
-      offsetX: 0,
-      offsetY: 0,
-      zoom: false, //是否缩放状态
-      distance: 0,  //两指距离
-      scale: 1,  //缩放倍数
-    }
+    activeTab: {}
   },
 
   async getPinsData(tabId) {
@@ -162,8 +153,7 @@ Page({
     const pinsListMap = this.data.pinsListMap
     this.setData({
       tabIndex: index,
-      activeTab: activeTab,
-      scrollInto: activeTab.id
+      activeTab: activeTab
     });
     // 如果没有数据，则加载
     if (!pinsListMap[activeTab.id].data || !pinsListMap[activeTab.id].data.length) {
@@ -200,8 +190,7 @@ Page({
   onLoad() {
     this.setData({
       tabIndex: 0,
-      activeTab: this.data.tabBars[0],
-      scrollInto: this.data.tabBars[0].id
+      activeTab: this.data.tabBars[0]
     });
     this.getPinsData(this.data.tabBars[0].id);
   },

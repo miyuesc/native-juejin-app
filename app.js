@@ -16,6 +16,10 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: {
+      hasLogin: true,
+      user_id: '747323639208391',
+      uuid: '7215848128545064463'
+    }
   }
 })

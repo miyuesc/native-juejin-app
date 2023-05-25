@@ -1,2 +1,84 @@
-<!--pages/posts/posts.wxml-->
-<text>pages/posts/posts.wxml</text>
+<!-- pages/posts/posts.wxml -->
+<view class="page-content post-content">
+  <van-tabs
+    animated
+    swipeable
+    sticky
+    active="{{tabIndex}}"
+    bind:click="onTabClick"
+    bind:change="onTabClick"
+  >
+    <van-tab
+      wx:for="{{categoryList}}"
+      wx:for-index="idx"
+      wx:for-item="item"
+      wx:key="idx"
+      title="{{item.category_name}}"
+      name="{{idx}}"
+    >
+      <scroll-view
+        class="scroll-v"
+        scroll-y
+        refresher-enabled
+        enable-back-to-top
+        refresher-enabled
+        data-item="{{item}}"
+        refresher-threshold="{{100}}"
+        refresher-default-style="white"
+        refresher-triggered="{{postMap[item.id].isLoading}}"
+        bind:refresherpulling="refreshData"
+        bind:scrolltolower="loadMore"
+      >
+        <block
+          wx:for="{{postMap[item.category_id].data}}"
+          wx:key="id"
+          wx:for-item="postItem"
+        >
+          <view class="post-item">
+            <view class="post-item-title">{{postItem.title}}</view>
+            <view class="post-meta-container">
+              <view class="post-author">{{postItem.author_name}}</view>
+              <view class="post-time-step">{{postItem.time_gap}}</view>
+              <view class="post-tags-list">
+                <view class="post-tag-item" wx:for="{{postItem.tags}}">{{item}}</view>
+              </view>
+            </view>
+            <view class="post-content-wrapper">
+              <view class="post-content_body">
+                <text class="post-content_brief">{{postItem.brief_content}}</text>
+              </view>
+              <view class="post-content_cover" wx:if="{{postItem.cover_image}}">
+                <image
+                  src="{{postItem.cover_image}}"
+                  height="120"
+                  mode="aspectFit"
+                  lazy-load
+                  webp
+                />
+              </view>
+            </view>
+            <view class="post-info-footer">
+              <view class="footer-item">
+                <van-icon name="eye-o" />
+                <text class="footer-item_text">{{postItem.view_count}}</text>
+              </view>
+              <view class="footer-item">
+                <van-icon name="comment-o" />
+                <text class="footer-item_text">{{postItem.comment_count}}</text>
+              </view>
+              <view class="footer-item">
+                <van-icon name="good-job-o" />
+                <text class="footer-item_text">{{postItem.digg_count}}</text>
+              </view>
+              <view class="footer-item">
+                <van-icon name="star-o" />
+                <text class="footer-item_text">{{postItem.collect_count}}</text>
+              </view>
+            </view>
+          </view>
+        </block>
+      </scroll-view>
+    </van-tab>
+  </van-tabs>
+</view>
+
