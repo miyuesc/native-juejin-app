@@ -4,6 +4,11 @@ page {
 	display: flex;
 }
 
+.scroll-v {
+  margin-top: 8px;
+  height: calc(100vh - 54px);
+}
+
 .page-content {
 	width: 100%;
 	flex: 1;

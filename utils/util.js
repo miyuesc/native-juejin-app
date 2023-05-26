@@ -20,6 +20,7 @@ const hour = minute * 60;
 const day = hour * 24;
 const week = day * 7;
 const month = day * 30;
+const year = month * 12;
 // 传入时间格式或时间戳，这里传入的时间格式: 2022-08-05T08:17:14.000+00:00
 export function convertTimeToHumanReadable(dateTime) {
 
@@ -148,3 +149,31 @@ export function formatTimeStep(seconds, format = ['小时', '分', '秒']) {
 
   return hoursStr + minutesStr + secondsStr;
 };
+
+export function formatTimeGap(seconds) {
+  seconds = seconds * 1000
+  if (seconds < minute) {
+    return `${seconds}秒前`;
+  } else if (seconds < hour) {
+    return `${Math.floor(seconds / minute)}分钟前`;
+  } else if (seconds < day) {
+    return `${Math.floor(seconds / hour)}小时前`;
+  } else if (seconds < month) {
+    return `${Math.floor(seconds / day)}天前`;
+  } else if (seconds < year) {
+    return `${Math.floor(seconds / month)}月前`;
+  } else {
+    return `${Math.floor(seconds / year)}年前`;
+  }
+}
+
+export function getPostContentString(htmlStr) {
+  const regex = /<article[^>]*data-entry-id[^>]*>([\s\S]*?)<\/article>/gi;
+  let content = '';
+  let match;
+  while ((match = regex.exec(htmlStr)) !== null) {
+    content += match[1];
+  }
+  return content;
+}
+

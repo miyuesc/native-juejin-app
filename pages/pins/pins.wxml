@@ -25,7 +25,7 @@
         refresher-threshold="{{100}}"
         refresher-default-style="white"
         refresher-triggered="{{pinsListMap[item.id].isLoading}}"
-        bind:refresherpulling="refreshData"
+        bind:refresherrefresh="refreshData"
         bind:scrolltolower="loadMore"
       >
         <block

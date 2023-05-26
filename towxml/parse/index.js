@@ -23,17 +23,13 @@ const parse2 = require('./parse2/index'),
     })(),
 
     getImages = (str) => {
-        const regex = /<img\s+src="([^"]+)"\s+alt="([^"]+)"\s*\/?>/g;
-        const images = [];
-        let match;
-
-        while ((match = regex.exec(str)) !== null) {
-            const src = match[1];
-            const alt = match[2];
-            images.push({ src, alt });
+        const regex = /<img[^>]*src="([^"]*)"[^>]*>/gi;
+        const matches = str.matchAll(regex);
+        const srcList = [];
+        for (const match of matches) {
+          srcList.push({src: match[1]});
         }
-
-        return images;
+        return srcList;
     },
 
     // 元素与html对应的wxml标签名

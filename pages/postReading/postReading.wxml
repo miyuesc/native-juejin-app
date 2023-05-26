@@ -1,2 +1,7 @@
-<!--pages/postReading/postReading.wxml-->
-<text>pages/postReading/postReading.wxml</text>
+<!-- pages/postReading/postReading.wxml -->
+<view class="page-content reading-page">
+  <view class="section-content">
+    <towxml nodes="{{currentSectionContent}}" />
+  </view>
+</view>
+

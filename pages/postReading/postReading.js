@@ -1,18 +1,62 @@
 // pages/postReading/postReading.js
+import { getPageHtml } from "../../utils/request"
+import { getPostContentString } from "../../utils/util"
+
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    currentSectionContent: null
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
+  onLoad() {
+    const eventChannel = this.getOpenerEventChannel()
+    if (eventChannel) {
+      eventChannel.on('continueReading', (post) => {
+        getPageHtml(`https://juejin.cn/post/${post.article_id}`).then((res) => {
 
+          const currentSectionContent = app.towxml(getPostContentString(res.data), 'html', {
+            events: {
+              tap(ev) {
+                const { data } = ev.currentTarget.dataset
+                const { tag, attrs } = data || {}
+                if (tag === 'img') {
+                  wx.previewImage({
+                    urls: (currentSectionContent._images || []).map(img => img.src),
+                    current: attrs.src
+                  })
+                  return;
+                }
+                if (tag === 'navigator') {
+                  wx.setClipboardData({
+                    data: attrs.href,
+                    success: () =>
+                      wx.showToast({ title: '链接已复制' })
+                  })
+                }
+              }
+            }
+          })
+
+          console.log(currentSectionContent);
+
+          this.setData({
+            currentSectionContent
+          })
+        })
+      })
+    } else {
+      wx.navigateBack({
+        delta: 0,
+      })
+    }
   },
 
   /**

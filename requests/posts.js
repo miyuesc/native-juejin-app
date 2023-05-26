@@ -1,7 +1,7 @@
 import { getData, postData } from "../utils/request.js"
 
 export const defaultRequestConfig = {
-    "limit": 30,
+    "limit": 20,
     "id_type": 2
 }
 
@@ -28,5 +28,6 @@ export function getComprehensivePosts(params) {
 export function getMinePost(params) {
     const app = getApp()
     const user_id = app.globalData.userInfo.user_id
-    return postData('/content_api/v1/article/query_list', { ...defaultRequestConfig, ...params, user_id })
+    delete params.cate_id
+    return postData('/content_api/v1/article/query_list', { ...params, user_id }, {aid: 2608, uuid: '7215848128545064463', splider: 0})
 }

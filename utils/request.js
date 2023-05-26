@@ -68,3 +68,21 @@ export function postData(url, data, params) {
 		})
 	})
 }
+
+export function getPageHtml(url) {
+	return new Promise(function(resolve, reject) {
+		wx.request({
+			url: url,
+			method: "GET",
+			header: {
+				cookie: cookie
+			},
+			success: function(res) {
+				resolve(res)
+			},
+			fail: function(err) {
+				reject(err)
+			}
+		})
+	})
+}

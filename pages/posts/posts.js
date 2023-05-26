@@ -1,7 +1,13 @@
-import { getCategoryList, getFollowsPosts, getCategoryPosts, getComprehensivePosts } from "../../requests/posts"
-import { formatTimeStep } from "../../utils/util"
+import {
+  getCategoryList,
+  getFollowsPosts,
+  getCategoryPosts,
+  getComprehensivePosts,
+  getMinePost
+} from "../../requests/posts"
+import { formatTimeGap } from "../../utils/util"
 
-
+const app = getApp()
 
 const presetCategoryList = [
   {
@@ -33,7 +39,7 @@ const emptyData = {
 
 const tabRequestMap = {
   follow: getFollowsPosts,
-  mine: getFollowsPosts,
+  mine: getMinePost,
   comprehensive: getComprehensivePosts,
   default: getCategoryPosts,
 }
@@ -72,7 +78,7 @@ Page({
     try {
       let currentPinsObj = this.data.postMap[tabId]
       if (!currentPinsObj) {
-        this.assignPinsData(tabId, currentPinsObj = emptyData)
+        this.assignInstanceData(tabId, currentPinsObj = emptyData)
       }
       wx.showLoading({
         title: '加载中...',
@@ -85,11 +91,14 @@ Page({
         cursor: currentPinsObj.cursor,
         sort_type: 300
       }
+      if (tabId === 'mine') {
+        requestForm.sort_type = (requestForm.sort_type / 100) % 2
+      }
       // 请求数据
       const { data, cursor } = await requestMethod(requestForm)
       const now = Math.floor(Date.now() / 1000)
-      
-      const newPostArr =  (data || []).reduce((cur, item) => {
+
+      const newPostArr = (data || []).reduce((cur, item) => {
         let post = item
         if (item.item_type && item.item_info) {
           if (item.item_type === 14) {
@@ -100,14 +109,15 @@ Page({
         }
         const postInfo = {
           title: post.article_info.title,
+          article_id: post.article_info.article_id,
           cover_image: post.article_info.cover_image,
           brief_content: post.article_info.brief_content,
-          time_gap: formatTimeStep(post.article_info.ctime - now),
+          time_gap: formatTimeGap(now - post.article_info.ctime),
           is_markdown: post.article_info.comment_count,
           tags: (post.tags || []).map(t => t.tag_name),
 
-          view_count: post.article_info.comment_count,
-          digg_count: post.article_info.comment_count,
+          view_count: post.article_info.view_count,
+          digg_count: post.article_info.digg_count,
           comment_count: post.article_info.comment_count,
           collect_count: post.article_info.collect_count,
 
@@ -122,7 +132,7 @@ Page({
 
       const postList = currentPinsObj.data.concat(newPostArr)
 
-      this.assignPinsData(tabId, { cursor, data: postList })
+      this.assignInstanceData(tabId, { cursor, data: postList })
 
       wx.hideLoading()
     } catch (error) {
@@ -135,7 +145,7 @@ Page({
       });
     }
   },
-  assignPinsData(tabId, data) {
+  assignInstanceData(tabId, data) {
     this.setData({
       [`postMap.${tabId}`]: {
         ...(this.data.postMap[tabId] || {}),
@@ -159,14 +169,33 @@ Page({
       activeTab: activeTab
     });
     // 如果没有数据，则加载
-    console.log(postMap[activeTab.category_id], !postMap[activeTab.category_id])
     if (!postMap[activeTab.category_id] || !postMap[activeTab.category_id].data || !postMap[activeTab.category_id].data.length) {
       this.getNavTabPosts(activeTab.category_id)
     }
   },
 
-  refreshData() {},
-  loadMore() {},
+  refreshData() {
+    const activeTabId = this.data.activeTab.category_id;
+    this.assignInstanceData(activeTabId, { data: [], cursor: '0', isLoading: true });
+    this.getNavTabPosts(activeTabId).then(() => {
+      this.assignInstanceData(activeTabId, { isLoading: false })
+    });
+  },
+  loadMore(e) {
+    const { item } = e.currentTarget.dataset || e.target.dataset;
+    this.getNavTabPosts(item.category_id);
+  },
+
+  pageToPostDetails(e) {
+    const { post } = e.currentTarget.dataset || e.target.dataset;
+    console.log(post)
+    wx.navigateTo({
+      url: '../postReading/postReading',
+      success(res) {
+        res.eventChannel.emit('continueReading', post)
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载

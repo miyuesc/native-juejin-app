@@ -25,22 +25,33 @@
         data-item="{{item}}"
         refresher-threshold="{{100}}"
         refresher-default-style="white"
-        refresher-triggered="{{postMap[item.id].isLoading}}"
-        bind:refresherpulling="refreshData"
+        refresher-triggered="{{postMap[item.category_id].isLoading}}"
+        bind:refresherrefresh="refreshData"
         bind:scrolltolower="loadMore"
       >
         <block
           wx:for="{{postMap[item.category_id].data}}"
-          wx:key="id"
+          wx:key="article_id"
           wx:for-item="postItem"
         >
-          <view class="post-item">
+          <view
+            class="post-item"
+            data-post="{{postItem}}"
+            catch:tap="pageToPostDetails"
+          >
             <view class="post-item-title">{{postItem.title}}</view>
             <view class="post-meta-container">
               <view class="post-author">{{postItem.author_name}}</view>
+              <view class="meta-gap-divider"></view>
               <view class="post-time-step">{{postItem.time_gap}}</view>
-              <view class="post-tags-list">
-                <view class="post-tag-item" wx:for="{{postItem.tags}}">{{item}}</view>
+              <view class="meta-gap-divider" wx:if="{{postItem.tags.length}}"></view>
+              <view class="post-tags-list" wx:if="{{postItem.tags.length}}">
+                <view
+                  class="post-tag-item"
+                  wx:for="{{postItem.tags}}"
+                  wx:key="index"
+                >{{item}}
+                </view>
               </view>
             </view>
             <view class="post-content-wrapper">
@@ -51,7 +62,7 @@
                 <image
                   src="{{postItem.cover_image}}"
                   height="120"
-                  mode="aspectFit"
+                  mode="aspectFill"
                   lazy-load
                   webp
                 />

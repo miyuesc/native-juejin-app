@@ -3,16 +3,6 @@
   background-color: #efefef;
 }
 
-.line-h {
-  height: 1rpx;
-  background-color: #eee;
-}
-
-.scroll-v {
-  margin-top: 8px;
-  height: calc(100vh - 60px);
-}
-
 .pin-item {
   display: flex;
   flex-direction: column;
