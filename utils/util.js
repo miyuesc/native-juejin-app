@@ -174,6 +174,9 @@ export function getPostContentString(htmlStr) {
   while ((match = regex.exec(htmlStr)) !== null) {
     content += match[1];
   }
+  content = content.replace(/<style[^>]*>[\s\S]*?<\/style>/gi, '');
+  content = content.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '');
+  content = content.replace(/<meta[^>]*>/gi, '');
   return content;
 }
 

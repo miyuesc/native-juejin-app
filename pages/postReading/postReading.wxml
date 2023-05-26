@@ -2,6 +2,9 @@
 <view class="page-content reading-page">
   <view class="section-content">
     <towxml nodes="{{currentSectionContent}}" />
+    <!-- <rich-text nodes="{{currentSectionContentStr}}"></rich-text> -->
   </view>
+  <!-- 个人小程序不支持 web-view -->
+  <!-- <web-view src="{{currentSectionUrl}}" /> -->
 </view>
 

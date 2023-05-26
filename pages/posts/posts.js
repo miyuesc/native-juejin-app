@@ -7,8 +7,6 @@ import {
 } from "../../requests/posts"
 import { formatTimeGap } from "../../utils/util"
 
-const app = getApp()
-
 const presetCategoryList = [
   {
     category_id: "comprehensive",
@@ -67,7 +65,7 @@ Page({
     }
     try {
       const { data } = await getCategoryList()
-      cateList.push(...data)
+      cateList.push(...data.map(({ category_id, category_name, category_url }) => ({ category_id, category_name, category_url })))
     } catch (e) {
       // 
     }
@@ -92,7 +90,7 @@ Page({
         sort_type: 300
       }
       if (tabId === 'mine') {
-        requestForm.sort_type = (requestForm.sort_type / 100) % 2
+        requestForm.sort_type = (requestForm.sort_type / 100) - 1
       }
       // 请求数据
       const { data, cursor } = await requestMethod(requestForm)

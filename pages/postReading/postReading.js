@@ -10,7 +10,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    currentSectionContent: null
+    currentSectionContent: null,
+    currentSectionContentStr: '',
+    currentSectionUrl: ''
   },
 
   /**
@@ -19,7 +21,12 @@ Page({
   onLoad() {
     const eventChannel = this.getOpenerEventChannel()
     if (eventChannel) {
+      wx.showLoading({
+        title: '加载中...',
+        mask: true
+      })
       eventChannel.on('continueReading', (post) => {
+        wx.setNavigationBarTitle({ title: post.title })
         getPageHtml(`https://juejin.cn/post/${post.article_id}`).then((res) => {
 
           const currentSectionContent = app.towxml(getPostContentString(res.data), 'html', {
@@ -45,12 +52,10 @@ Page({
             }
           })
 
-          console.log(currentSectionContent);
-
           this.setData({
             currentSectionContent
           })
-        })
+        }).finally(() => wx.hideLoading())
       })
     } else {
       wx.navigateBack({
