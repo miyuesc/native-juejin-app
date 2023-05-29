@@ -1,2 +1,8 @@
 <!--pages/dashboard/dashboard.wxml-->
-<text>pages/dashboard/dashboard.wxml</text>
+<view class="page-content dashboard-content">
+  <view wx:if="{{!hasLogin}}" class="login-tips">
+    <view class="login-btn" bind:tap="nvaiToLogin">请登录</view>
+  </view>
+  <view></view>
+</view>
+

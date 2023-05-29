@@ -1,18 +1,29 @@
 // pages/dashboard/dashboard.js
+const app = getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    hasLogin: false
+  },
+  // methods
+  nvaiToLogin() {
+    wx.navigateTo({
+      url: '../login/index',
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-
+    const userInfo = app.globalData.userInfo
+    this.setData({
+      hasLogin: userInfo.hasLogin
+    })
   },
 
   /**

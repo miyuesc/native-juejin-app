@@ -1,0 +1,22 @@
+<view class="page-content login-content">
+  <view class="login-page_header">登 录</view>
+  <view class="login-page_form">
+    <view class="login-page_form-item">
+      <input bind:input="bindUserIdInput" placeholder="请输入用户ID" />
+    </view>
+    <view class="login-page_form-item">
+      <input bind:input="bindUUIdInput" placeholder="请输入用户UUId" />
+    </view>
+    <view class="login-page_form-item">
+      <textarea
+        bind:input="bindCookieInput"
+        maxlength="{{-1}}"
+        placeholder="请输入用户Cookie"
+      />
+      </view>
+  </view>
+  <view class="login-page_btns">
+    <view class="login-page_btn-item" bind:tap="submitForm">确认</view>
+  </view>
+</view>
+

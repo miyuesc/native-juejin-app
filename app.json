@@ -7,7 +7,8 @@
     "pages/books/books",
     "pages/bookDetails/bookDetails",
     "pages/bookReading/bookReading",
-    "pages/dashboard/dashboard"
+    "pages/dashboard/dashboard",
+    "pages/login/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
