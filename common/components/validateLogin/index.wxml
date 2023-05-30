@@ -1,0 +1,3 @@
+<view class="validate-login-content">
+  <view class="btn" bind:tap="naviToLogin">请登录</view>
+</view>

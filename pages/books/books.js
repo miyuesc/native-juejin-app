@@ -15,6 +15,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    hasLogin: false,
     loading: false,
     booksList: []
   },
@@ -22,6 +23,9 @@ Page({
   // methods
   async getBooks() {
     try {
+      if (!this.data.hasLogin) {
+        return;
+      }
       this.setData({ loading: true });
       const { data } = await getBooksList();
       this.setData({ booksList: data.map(this.getBookInfo) });
@@ -66,7 +70,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.getBooks()
   },
 
   /**
@@ -80,7 +83,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    const userInfo = getApp().globalData.userInfo
+    this.setData({
+      hasLogin: userInfo.hasLogin
+    })
+    this.getBooks()
   },
 
   /**

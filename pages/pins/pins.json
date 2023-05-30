@@ -2,5 +2,7 @@
   "navigationBarTitleText": "沸点",
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 50,
-  "usingComponents": {}
+  "usingComponents": {
+    "validate-login": "../../common/components/validateLogin/index"
+  }
 }

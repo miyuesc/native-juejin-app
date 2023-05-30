@@ -16,7 +16,11 @@
       title="{{item.category_name}}"
       name="{{idx}}"
     >
+      <block wx:if="{{(item.category_id === 'mine' || item.category_id === 'follow') && !hasLogin}}">
+        <validate-login></validate-login>
+      </block>
       <scroll-view
+        wx:else
         class="scroll-v"
         scroll-y
         refresher-enabled

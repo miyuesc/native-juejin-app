@@ -1,2 +1,4 @@
 <!--pages/pinDetails/pinDetails.wxml-->
-<text>pages/pinDetails/pinDetails.wxml</text>
+<view class="page-content">
+  <view >沸点详情</view>
+</view>

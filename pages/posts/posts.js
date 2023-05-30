@@ -53,6 +53,7 @@ Page({
       mine: { ...emptyData },
       comprehensive: { ...emptyData }
     },
+    hasLogin: false,
     tabIndex: 0,
     activeTab: {}
   },
@@ -74,6 +75,9 @@ Page({
   // 标签栏内文章列表
   async getNavTabPosts(tabId) {
     try {
+      if(!this.data.hasLogin && (tabId === 'mine' || tabId === 'follow')) {
+        return;
+      }
       let currentPinsObj = this.data.postMap[tabId]
       if (!currentPinsObj) {
         this.assignInstanceData(tabId, currentPinsObj = emptyData)
@@ -199,14 +203,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    this.initNavTabsList().then(() => {
-      const activeTab = this.data.categoryList[0]
-      this.setData({
-        tabIndex: 0,
-        activeTab
-      });
-      this.getNavTabPosts(activeTab.category_id)
-    })
   },
 
   /**
@@ -220,7 +216,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    const userInfo = getApp().globalData.userInfo
+    this.setData({
+      hasLogin: userInfo.hasLogin
+    })
+    this.initNavTabsList().then(() => {
+      const activeTab = this.data.categoryList[0]
+      this.setData({
+        tabIndex: 0,
+        activeTab
+      });
+      this.getNavTabPosts(activeTab.category_id)
+    })
   },
 
   /**

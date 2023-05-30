@@ -71,6 +71,9 @@ Page({
 
   async getPinsData(tabId) {
     try {
+      if(!this.data.hasLogin && (tabId === 'mine' || tabId === 'follow')) {
+        return;
+      }
       const currentPinsObj = this.data.pinsListMap[tabId]
       if (!currentPinsObj) {
         return
@@ -188,11 +191,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad() {
-    this.setData({
-      tabIndex: 0,
-      activeTab: this.data.tabBars[0]
-    });
-    this.getPinsData(this.data.tabBars[0].id);
   },
 
   /**
@@ -206,7 +204,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    const userInfo = getApp().globalData.userInfo
+    const activeTab = this.data.activeTab || this.data.tabBars[0]
+    this.setData({
+      hasLogin: userInfo.hasLogin,
+      tabIndex: this.data.tabIndex || 0,
+      activeTab: activeTab
+    });
+    this.getPinsData(activeTab.id);
   },
 
   /**

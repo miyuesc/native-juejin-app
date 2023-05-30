@@ -20,10 +20,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    const userInfo = app.globalData.userInfo
-    this.setData({
-      hasLogin: userInfo.hasLogin
-    })
   },
 
   /**
@@ -37,7 +33,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-
+    const userInfo = app.globalData.userInfo
+    this.setData({
+      hasLogin: userInfo.hasLogin
+    })
   },
 
   /**

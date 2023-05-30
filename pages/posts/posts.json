@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "文章",
-  "usingComponents": {}
+  "usingComponents": {
+    "validate-login": "../../common/components/validateLogin/index"
+  }
 }
