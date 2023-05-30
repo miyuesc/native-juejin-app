@@ -1,3 +1,5 @@
+import { getPinDetails } from "../../requests/pins"
+
 // pages/pinDetails/pinDetails.js
 Page({
 
@@ -5,14 +7,43 @@ Page({
    * 页面的初始数据
    */
   data: {
+    details: null
+  },
+  // methods
+  async getPinDetails(msg_id) {
+    try {
+      wx.showLoading({
+        title: '加载中...',
+        mask: true
+      })
 
+      const { data } = await getPinDetails(msg_id)
+      console.log(data)
+
+
+      wx.hideLoading()
+    } catch (error) {
+      console.error(error)
+      wx.hideLoading()
+      wx.showToast({
+        icon: 'error',
+        title: '请求失败',
+        duration: 2000
+      });
+      this.setData({ details: {} })
+    }
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad(options) {
-
+  onLoad(query) {
+    console.log(query)
+    if (query.msg_id) {
+      this.getPinDetails(query.msg_id)
+    } else {
+      this.setData({ details: {} })
+    }
   },
 
   /**
