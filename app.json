@@ -46,7 +46,7 @@
   },
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
-    "towxml": "./common/components/towxml/towxml",
+    "towxml": "/towxml/towxml",
     "van-button": "@vant/weapp/button/index",
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",

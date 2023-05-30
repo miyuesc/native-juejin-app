@@ -66,7 +66,7 @@ Page({
       },
     },
     tabIndex: 0,
-    activeTab: {}
+    activeTab: null
   },
 
   async getPinsData(tabId) {
@@ -205,10 +205,11 @@ Page({
    */
   onShow() {
     const userInfo = getApp().globalData.userInfo
+    const tabIndex = this.data.tabIndex || 0
     const activeTab = this.data.activeTab || this.data.tabBars[0]
     this.setData({
       hasLogin: userInfo.hasLogin,
-      tabIndex: this.data.tabIndex || 0,
+      tabIndex: tabIndex,
       activeTab: activeTab
     });
     this.getPinsData(activeTab.id);

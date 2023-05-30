@@ -3,6 +3,15 @@
   <view wx:if="{{!hasLogin}}" class="login-tips">
     <view class="login-btn" bind:tap="nvaiToLogin">请登录</view>
   </view>
-  <view></view>
+  <block wx:else>
+    <view class="dashboard-user"></view>
+    <view class="dashboard-jpower">
+      <ec-canvas
+        id="jpower-chart"
+        canvas-id="jpower-chart"
+        ec="{{jpowerChartEC}}"
+      ></ec-canvas>
+    </view>
+  </block>
 </view>
 

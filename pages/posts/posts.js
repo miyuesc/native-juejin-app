@@ -55,7 +55,7 @@ Page({
     },
     hasLogin: false,
     tabIndex: 0,
-    activeTab: {}
+    activeTab: null
   },
   // methods
   // tabs 标签栏
