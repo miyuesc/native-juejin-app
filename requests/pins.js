@@ -20,3 +20,7 @@ export function getFollowPins(params) {
 export function getMinePins(params) {
 	return postData('/content_api/v1/short_msg/query_list', {...defaultRequestConfig, ...params})
 }
+
+export function getPinDetails(msg_id) {
+	return postData('/content_api/v1/short_msg/detail', {msg_id})
+}

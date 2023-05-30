@@ -1,10 +1,149 @@
 /* pages/dashboard/dashboard.wxss */
-ec-canvas {
-  width: 100%;
-  height: 100%;
+
+.dashboard-content {
+  box-sizing: border-box;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
 }
 
-.dashboard-jpower {
-  width: 100%;
-  height: 30vh;
+.divider-v {
+  margin: 0 8px;
+  width: 0;
+  border-left: 1px dashed var(--juejin-gray-2);
+}
+
+.dashboard-item {
+  display: flex;
+  padding: 8px;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.dashboard-item+.dashboard-item {
+  margin-top: 8px;
+}
+
+.user-cover {
+  width: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.right-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-cover image {
+  width: 80px;
+  height: 80px;
+}
+
+.user-name {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.user-tags {
+  display: flex;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--juejin-font-2)
+}
+
+.user-desc {
+  font-size: 14px;
+  color: var(--juejin-font-3)
+}
+
+.creator-lv-tag {
+  width: 35px;
+  height: 16px;
+  background-size: contain;
+}
+
+.vip-lv-tag {
+  width: 16px;
+  height: 16px;
+  background-size: contain;
+}
+
+.user-counters {
+  display: flex;
+  justify-content: space-between;
+}
+
+.counter-item {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.counter-item-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--juejin-font-1)
+}
+
+.counter-item-value {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--juejin-font-2)
+}
+
+.creator-lv1 {
+  background-image: url(https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a02c571ff5e24b90b0c7aa70c58ebd1c~tplv-k3u1fbpfcp-no-mark:0:0:0:0.awebp);
+}
+
+.creator-lv2 {
+  background-image: url(https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/53901be7d27e4abe94530e12d815491d~tplv-k3u1fbpfcp-no-mark:0:0:0:0.awebp);
+}
+
+.creator-lv3 {
+  background-image: url(https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/922e26916a444513bceddad5bcf437e1~tplv-k3u1fbpfcp-no-mark:0:0:0:0.awebp);
+}
+
+.creator-lv4 {
+  background-image: url(https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/1f4453379f1d416ca00c3619e796d330~tplv-k3u1fbpfcp-no-mark:0:0:0:0.awebp);
+}
+
+.creator-lv5 {
+  background-image: url(https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8584543d8535435a9d74c1fbf7901ac7~tplv-k3u1fbpfcp-no-mark:0:0:0:0.awebp);
+}
+
+.creator-lv6 {
+  background-image: url(https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/c1f4af1eaec64ce78675ad13fcd71be1~tplv-k3u1fbpfcp-no-mark:0:0:0:0.awebp);
+}
+
+.creator-lv7 {
+  background-image: url(https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9a070131b0b34e729a1c6b0cdcda2dc7~tplv-k3u1fbpfcp-no-mark:0:0:0:0.awebp);
+}
+
+.vip-1 {
+  background-image: url();
+}
+
+.vip-2 {
+  background-image: url();
+}
+
+.vip-3 {
+  background-image: url(https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/ffdbad884aa0e7884cbcf924226df6ce.svg);
+}
+
+.vip-4 {
+  background-image: url(https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/07302452a7ad81cb43a173b5cd580237.svg);
+}
+
+.vip-5 {
+  background-image: url(https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/162b40efbd71af9a806dd2b54c4580ef.svg);
 }

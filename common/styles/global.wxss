@@ -2,8 +2,6 @@ page {
 	width: 100%;
 	min-height: 100%;
 	display: flex;
-
-	
 	--juejin-layer-golden-1: #faf3e5;
 	--juejin-layer-golden-2: #f6e7cb;
 	--juejin-component-hover: #e4e6eb;
@@ -108,6 +106,7 @@ page {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+	background-color: var(--juejin-background);
 }
 
 .preview-wrapper {

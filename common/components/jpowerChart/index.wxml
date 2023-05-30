@@ -1,0 +1,8 @@
+<view class="dashboard-chart dashboard-jpower">
+  <ec-canvas
+    id="jpower-chart"
+    canvas-id="jpower-chart"
+    ec="{{jpowerChartEC}}"
+  ></ec-canvas>
+</view>
+

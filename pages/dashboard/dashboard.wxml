@@ -4,14 +4,54 @@
     <view class="login-btn" bind:tap="nvaiToLogin">请登录</view>
   </view>
   <block wx:else>
-    <view class="dashboard-user"></view>
-    <view class="dashboard-jpower">
-      <ec-canvas
-        id="jpower-chart"
-        canvas-id="jpower-chart"
-        ec="{{jpowerChartEC}}"
-      ></ec-canvas>
+    <view class="dashboard-item dashboard-user">
+      <view class="user-cover">
+        <image src="{{userDetailsInfo.avatar_large}}" />
+      </view>
+      <view class="divider-v"></view>
+      <view class="right-content">
+        <view class="user-name">
+          <view>{{userDetailsInfo.user_name}}</view>
+          <view class="creator-lv-tag creator-lv{{userDetailsInfo.level}}"></view>
+          <view class="vip-lv-tag vip-{{userDetailsInfo.vip_level}}"></view>
+        </view>
+        <view class="user-tags">
+          <view class="user-tag-item">{{userDetailsInfo.company}}</view>
+          <view class="user-tag-item">{{userDetailsInfo.job_title}}</view>
+        </view>
+        <view class="user-desc">{{userDetailsInfo.description}}</view>
+        <view class="user-counters">
+          <view class="counter-item">
+            <view class="counter-item-label">被阅读</view>
+            <view class="counter-item-value">{{userDetailsInfo.got_view_count || 0}}</view>
+          </view>
+          <view class="counter-item">
+            <view class="counter-item-label">被点赞</view>
+            <view class="counter-item-value">{{userDetailsInfo.got_digg_count || 0}}</view>
+          </view>
+          <view class="counter-item">
+            <view class="counter-item-label">被收藏</view>
+            <view class="counter-item-value">{{userDetailsInfo.got_collection_count || 0}}</view>
+          </view>
+        </view>
+
+        <view class="user-counters">
+          <view class="counter-item">
+            <view class="counter-item-label">关注者</view>
+            <view class="counter-item-value">{{userDetailsInfo.follower_count || 0}}</view>
+          </view>
+          <view class="counter-item">
+            <view class="counter-item-label">关注中</view>
+            <view class="counter-item-value">{{userDetailsInfo.followee_count || 0}}</view>
+          </view>
+          <view class="counter-item">
+            <view class="counter-item-label">掘力值</view>
+            <view class="counter-item-value">{{userDetailsInfo.power}}</view>
+          </view>
+        </view>
+      </view>
     </view>
+    <jpower-chart class="dashboard-item" />
   </block>
 </view>
 
