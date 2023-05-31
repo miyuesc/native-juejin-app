@@ -11,15 +11,15 @@ function setOption(chart, series, xAxis) {
         type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
       }
     },
-    colors: ['#9655ed', ],
+    color: ['#9f54ff', '#57a0ff', '#ff5e54', '#33d790', '#ffcc15'],
     legend: {
       data: series.map(s => s.name)
     },
     grid: {
-      left: 20,
+      left: 10,
       right: 20,
       bottom: 20,
-      top: 60,
+      top: 30,
       containLabel: true
     },
     xAxis: [
@@ -101,15 +101,20 @@ const componentOptions = {
 
       const series = [
         {
-          name: '掘力值增长',
+          name: '净增',
           type: 'bar',
+          label: {
+            show: true,
+            position: 'top',
+            fontSize: 10,
+          },
           data: increase
         }, {
-          name: '创作行为',
+          name: '创作',
           type: 'line',
           data: creativity
         }, {
-          name: '优质推荐',
+          name: '推荐',
           type: 'line',
           data: quality
         }, {
@@ -117,7 +122,7 @@ const componentOptions = {
           type: 'line',
           data: impact
         }, {
-          name: '违规扣减',
+          name: '扣减',
           type: 'line',
           data: violation
         }

@@ -1,9 +1,15 @@
 .dashboard-chart {
   width: 100%;
-  height: 30vh;
+  height: 36vh;
+  display: flex;
+  flex-direction: column;
 }
 
-ec-canvas {
+.dashboard-chart-title {
+  height: 32px;
+}
+
+.dashboard-chart-content {
   width: 100%;
-  height: 100%;
+  flex: 1;
 }

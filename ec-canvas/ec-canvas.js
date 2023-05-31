@@ -143,7 +143,7 @@ Component({
         .select('.ec-canvas')
         .fields({ node: true, size: true })
         .exec(res => {
-          const canvasNode = res[0].node
+          const canvasNode = res[0]?.node
           this.canvasNode = canvasNode
 
           const canvasDpr = wx.getSystemInfoSync().pixelRatio

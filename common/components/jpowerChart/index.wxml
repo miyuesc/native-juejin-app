@@ -1,5 +1,7 @@
 <view class="dashboard-chart dashboard-jpower">
+  <view class="dashboard-chart-title">近30日掘力值增长明细</view>
   <ec-canvas
+    class="dashboard-chart-content"
     id="jpower-chart"
     canvas-id="jpower-chart"
     ec="{{jpowerChartEC}}"
