@@ -18,6 +18,21 @@ const cardDatas = [
   "incr_undo_follower",
   "incr_follower"
 ]
+const cardTitleMap = {
+  "all_article": '文章总数',
+  "all_article_display": '文章展现量',
+  "all_article_view": '文章阅读数',
+  "all_article_digg": '文章点赞数',
+  "all_article_comment": '文章评论数',
+  "all_article_collect": '文章收藏数',
+  "all_column": '专栏总数',
+  "all_column_follow": '专栏关注数',
+  "all_follower": '粉丝总数',
+  "incr_active_follower": '互动粉丝数',
+  "incr_do_follower": '新增粉丝数',
+  "incr_undo_follower": '取消关注数',
+  "incr_follower": '净增粉丝数'
+}
 
 Page({
 
@@ -27,7 +42,10 @@ Page({
   data: {
     hasLogin: false,
     userId: '',
-    userDetailsInfo: null
+    userDetailsInfo: null,
+    cards: [],
+    cardTitleMap,
+    currentDate: ''
   },
   // methods
   nvaiToLogin() {
@@ -40,6 +58,7 @@ Page({
     const { data } = await getUserDetails()
     this.setData({
       userDetailsInfo: {
+        ...this.data.userDetailsInfo,
         user_name: data.user_name,
         avatar_large: data.avatar_large,
         company: data.company,
@@ -61,6 +80,28 @@ Page({
   async getCardDatas() {
     try {
       const { data } = await getCardDatas(cardDatas, this.data.userId)
+      if (data.datas.all_article_collect) {
+        this.setData({
+          'userDetailsInfo.got_collection_count': data.datas.all_article_collect.cnt
+        })
+      }
+      this.setData({
+        currentDate: data.date,
+        cards: Object.keys(data.datas).map(key => {
+          const thanVal = data.datas[key].than_before
+          let thanTag = 'normal'
+          if (thanVal > 0) {
+            thanTag = 'up'
+          } else if (thanVal < 0) {
+            thanTag = 'down'
+          }
+          return {
+            key,
+            thanTag,
+            ...data.datas[key]
+          }
+        })
+      })
     } catch (error) {
       console.error(error)
     }
@@ -90,6 +131,7 @@ Page({
     })
     if (hasLogin) {
       this.getUserDetails()
+      this.getCardDatas()
     }
   },
 

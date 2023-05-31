@@ -39,11 +39,15 @@ function setOption(chart, series, xAxis) {
     yAxis: [
       {
         type: 'value',
-        axisTick: { show: false },
+        axisTick: { show: true },
         axisLine: {
+          show: true,
           lineStyle: {
-            color: '#999'
+            color: '#eee'
           }
+        },
+        splitLine: {
+          show: false,
         },
         axisLabel: {
           color: '#666'

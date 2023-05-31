@@ -5,6 +5,7 @@
   padding: 8px;
   display: flex;
   flex-direction: column;
+  height: auto;
 }
 
 .divider-v {
@@ -23,6 +24,13 @@
 
 .dashboard-item+.dashboard-item {
   margin-top: 8px;
+}
+
+.dashboard-item_title {
+  height: 32px;
+}
+.dashboard-item_content {
+  flex: 1;
 }
 
 .user-cover {
@@ -146,4 +154,43 @@
 
 .vip-5 {
   background-image: url(https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/162b40efbd71af9a806dd2b54c4580ef.svg);
+}
+
+.dashboard-item.data-cards {
+  flex-direction: column;
+}
+.data-cards > .dashboard-item_content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.card-item {
+  width: 28%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--juejin-gray-2);
+  border-radius: 4px;
+  padding: 4px;
+  gap: 4px;
+}
+.card-item_title {
+  color: var(--juejin-font-2);
+  font-size: 12px;
+}
+.card-item_value {
+  color: var(--juejin-font-1);
+  font-size: 20px;
+}
+.card-item_than {
+  color: var(--juejin-font-2);
+  font-size: 10px;
+  display: flex;
+  gap: 4px;
+}
+.card-item_than-value.up {
+  color: var(--juejin-font-brand1-normal);
+}
+.card-item_than-value.down {
+  color: var(--juejin-font-danger)
 }

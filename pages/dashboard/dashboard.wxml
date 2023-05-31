@@ -1,8 +1,8 @@
 <!--pages/dashboard/dashboard.wxml-->
 <view class="page-content dashboard-content">
-  <view wx:if="{{!hasLogin}}" class="login-tips">
-    <view class="login-btn" bind:tap="nvaiToLogin">请登录</view>
-  </view>
+  <block wx:if="{{!hasLogin}}">
+    <validate-login></validate-login>
+  </block>
   <block wx:else>
     <view class="dashboard-item dashboard-user">
       <view class="user-cover">
@@ -53,7 +53,28 @@
     </view>
     <jpower-chart class="dashboard-item" />
 
-    <view class="dashboard-item data-cards"></view>
+    <view class="dashboard-item data-cards">
+      <view class="dashboard-item_title">{{currentDate}}日数据</view>
+      <view class="dashboard-item_content">
+        <view
+          class="card-item"
+          wx:for="{{cards}}"
+          wx:for-item="card"
+          wx:key="index"
+        >
+          <view class="card-item_title">{{cardTitleMap[card.key]}}</view>
+          <view class="card-item_value">{{card.cnt}}</view>
+          <view class="card-item_than">
+            <view class="card-item_than-label">较昨日</view>
+            <view class="card-item_than-value {{card.thanTag}}">
+              <van-icon wx:if="{{card.thanTag==='up'}}" name="arrow-up" />
+              <van-icon wx:if="{{card.thanTag==='down'}}" name="arrow-down" />
+              {{card.than_before || '--'}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
   </block>
 </view>
 

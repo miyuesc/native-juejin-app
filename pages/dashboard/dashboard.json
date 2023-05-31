@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "jpower-chart": "../../common/components/jpowerChart"
+    "jpower-chart": "../../common/components/jpowerChart",
+    "validate-login": "../../common/components/validateLogin/index"
   }
 }
