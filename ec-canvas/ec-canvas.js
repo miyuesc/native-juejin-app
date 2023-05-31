@@ -145,29 +145,30 @@ Component({
         .exec(res => {
           const canvasNode = res[0]?.node
           this.canvasNode = canvasNode
-
-          const canvasDpr = wx.getSystemInfoSync().pixelRatio
-          const canvasWidth = res[0].width
-          const canvasHeight = res[0].height
-
-          const ctx = canvasNode.getContext('2d')
-
-          const canvas = new WxCanvas(ctx, this.data.canvasId, true, canvasNode)
-          echarts.setCanvasCreator(() => {
-            return canvas
-          })
-
-          if (typeof callback === 'function') {
-            this.chart = callback(canvas, canvasWidth, canvasHeight, canvasDpr)
-          } else if (this.data.ec && typeof this.data.ec.onInit === 'function') {
-            this.chart = this.data.ec.onInit(canvas, canvasWidth, canvasHeight, canvasDpr)
-          } else {
-            this.triggerEvent('init', {
-              canvas: canvas,
-              width: canvasWidth,
-              height: canvasHeight,
-              dpr: canvasDpr
+          if (canvasNode) {
+            const canvasDpr = wx.getSystemInfoSync().pixelRatio
+            const canvasWidth = res[0].width
+            const canvasHeight = res[0].height
+  
+            const ctx = canvasNode.getContext('2d')
+  
+            const canvas = new WxCanvas(ctx, this.data.canvasId, true, canvasNode)
+            echarts.setCanvasCreator(() => {
+              return canvas
             })
+  
+            if (typeof callback === 'function') {
+              this.chart = callback(canvas, canvasWidth, canvasHeight, canvasDpr)
+            } else if (this.data.ec && typeof this.data.ec.onInit === 'function') {
+              this.chart = this.data.ec.onInit(canvas, canvasWidth, canvasHeight, canvasDpr)
+            } else {
+              this.triggerEvent('init', {
+                canvas: canvas,
+                width: canvasWidth,
+                height: canvasHeight,
+                dpr: canvasDpr
+              })
+            }
           }
         })
     },

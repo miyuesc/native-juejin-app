@@ -14,3 +14,9 @@ export function jpowerGrowth() {
     "limit": 30
   })
 }
+
+export function getCardDatas(datas, user_id) {
+  return postData('/content_api/v1/author_center/data/card', {
+    datas, user_id
+  })
+}

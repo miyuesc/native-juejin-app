@@ -52,6 +52,8 @@
       </view>
     </view>
     <jpower-chart class="dashboard-item" />
+
+    <view class="dashboard-item data-cards"></view>
   </block>
 </view>
 

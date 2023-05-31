@@ -1,7 +1,23 @@
-import { getUserDetails } from "../../requests/dashboard";
+import { getCardDatas, getUserDetails } from "../../requests/dashboard";
 
 // pages/dashboard/dashboard.js
 const app = getApp();
+
+const cardDatas = [
+  "all_article",
+  "all_article_display",
+  "all_article_view",
+  "all_article_digg",
+  "all_article_comment",
+  "all_article_collect",
+  "all_column",
+  "all_column_follow",
+  "all_follower",
+  "incr_active_follower",
+  "incr_do_follower",
+  "incr_undo_follower",
+  "incr_follower"
+]
 
 Page({
 
@@ -10,6 +26,7 @@ Page({
    */
   data: {
     hasLogin: false,
+    userId: '',
     userDetailsInfo: null
   },
   // methods
@@ -18,6 +35,7 @@ Page({
       url: '../login/index',
     })
   },
+  // 用户基础信息
   async getUserDetails() {
     const { data } = await getUserDetails()
     this.setData({
@@ -30,7 +48,7 @@ Page({
 
         level: data.level,
         vip_level: data.user_growth_info.vip_level,
-        
+
         got_view_count: data.got_view_count,
         got_digg_count: data.got_digg_count,
         follower_count: data.follower_count,
@@ -38,6 +56,14 @@ Page({
         power: data.power
       }
     })
+  },
+  // 卡片数据
+  async getCardDatas() {
+    try {
+      const { data } = await getCardDatas(cardDatas, this.data.userId)
+    } catch (error) {
+      console.error(error)
+    }
   },
 
   /**
@@ -57,9 +83,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow() {
-    const {hasLogin} = app.globalData.userInfo
+    const { hasLogin, userId } = app.globalData.userInfo
     this.setData({
-      hasLogin: hasLogin
+      hasLogin,
+      userId
     })
     if (hasLogin) {
       this.getUserDetails()
