@@ -112,23 +112,23 @@ Page({
           'userDetailsInfo.got_collection_count': data.datas.all_article_collect.cnt
         })
       }
-      this.setData({
-        currentDate: data.date,
-        cards: Object.keys(data.datas).map(key => {
-          const thanVal = data.datas[key].than_before
-          let thanTag = 'normal'
-          if (thanVal > 0) {
-            thanTag = 'up'
-          } else if (thanVal < 0) {
-            thanTag = 'down'
-          }
-          return {
-            key,
-            thanTag,
-            ...data.datas[key]
-          }
+      const cards = []
+      for (const key of cardDatas) {
+        const thanVal = data.datas[key].than_before
+        let thanTag = 'normal'
+        if (thanVal > 0) {
+          thanTag = 'up'
+        } else if (thanVal < 0) {
+          thanTag = 'down'
+        }
+        cards.push({
+          key,
+          thanTag,
+          ...data.datas[key]
         })
-      })
+      }
+      
+      this.setData({ currentDate: data.date, cards })
     } catch (error) {
       console.error(error)
     }
