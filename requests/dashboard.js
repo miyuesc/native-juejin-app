@@ -20,3 +20,12 @@ export function getCardDatas(datas, user_id) {
     datas, user_id
   })
 }
+
+export function getCreatorPosts(page_no) {
+  return postData('/content_api/v1/article/list_by_user', {
+    audit_status: null,
+    keyword: '',
+    page_size: 20,
+    page_no
+  })
+}

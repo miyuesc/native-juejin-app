@@ -1,7 +1,10 @@
-export const formatTime = date => {
+export const formatTime = (date, shouTime = true) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
+  if (!shouTime) {
+    return `${[year, month, day].map(formatNumber).join('/')}`
+  }
   const hour = date.getHours()
   const minute = date.getMinutes()
   const second = date.getSeconds()

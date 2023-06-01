@@ -1,4 +1,5 @@
-<!--pages/dashboard/dashboard.wxml-->
+<wxs module="tools" src="/common/wxs/timeFormat.wxs"></wxs>
+<!-- pages/dashboard/dashboard.wxml -->
 <view class="page-content dashboard-content">
   <block wx:if="{{!hasLogin}}">
     <validate-login></validate-login>
@@ -34,7 +35,6 @@
             <view class="counter-item-value">{{userDetailsInfo.got_collection_count || 0}}</view>
           </view>
         </view>
-
         <view class="user-counters">
           <view class="counter-item">
             <view class="counter-item-label">关注者</view>
@@ -74,6 +74,54 @@
           </view>
         </view>
       </view>
+    </view>
+
+    <view class="dashboard-item post-top">
+      <view class="dashboard-item_title">文章 TOP 10</view>
+      <van-tabs
+        animated
+        swipeable
+        sticky
+      >
+        <van-tab
+          wx:for="{{postsTopTabs}}"
+          wx:for-index="idx"
+          wx:for-item="item"
+          wx:key="idx"
+          title="{{item.name}}"
+          name="{{idx}}"
+        >
+          <view
+            class="post-top-item"
+            wx:for="{{postsTop[item.id]}}"
+            wx:for-item="post"
+            wx:key="article_id"
+            data-post="{{post}}"
+            bind:tap="pageToPostDetails"
+          >
+            <view class="post-item-title">{{ post.title }}</view>
+            <view class="post-item-ctime">{{tools.dateFormat(post.create_time,'YYYY年MM月dd日')}}</view>
+            <view class="post-info-footer">
+              <view class="footer-item">
+                <van-icon name="eye-o" />
+                <text class="footer-item_text">{{post.view_count}}</text>
+              </view>
+              <view class="footer-item">
+                <van-icon name="comment-o" />
+                <text class="footer-item_text">{{post.comment_count}}</text>
+              </view>
+              <view class="footer-item">
+                <van-icon name="good-job-o" />
+                <text class="footer-item_text">{{post.digg_count}}</text>
+              </view>
+              <view class="footer-item">
+                <van-icon name="star-o" />
+                <text class="footer-item_text">{{post.collect_count}}</text>
+              </view>
+            </view>
+          </view>
+        </van-tab>
+      </van-tabs>
     </view>
   </block>
 </view>

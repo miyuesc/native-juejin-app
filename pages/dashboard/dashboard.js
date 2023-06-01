@@ -1,4 +1,5 @@
-import { getCardDatas, getUserDetails } from "../../requests/dashboard";
+import { getCardDatas, getCreatorPosts, getUserDetails } from "../../requests/dashboard";
+import { formatTime } from '../../utils/util'
 
 // pages/dashboard/dashboard.js
 const app = getApp();
@@ -14,7 +15,7 @@ const cardDatas = [
   "all_column_follow",
   "all_follower",
   "incr_active_follower",
-  "incr_do_follower",
+  // "incr_do_follower",
   "incr_undo_follower",
   "incr_follower"
 ]
@@ -45,7 +46,28 @@ Page({
     userDetailsInfo: null,
     cards: [],
     cardTitleMap,
-    currentDate: ''
+    currentDate: '',
+
+    posts: [],
+    postsTopTabs: [{
+      name: '阅读榜',
+      id: 'viewTop'
+    }, {
+      name: '点赞榜',
+      id: 'diggTop'
+    }, {
+      name: '评论榜',
+      id: 'commentTop'
+    }, {
+      name: '收藏榜',
+      id: 'collectTop'
+    }],
+    postsTop: {
+      viewTop: [],
+      diggTop: [],
+      commentTop: [],
+      collectTop: []
+    }
   },
   // methods
   nvaiToLogin() {
@@ -72,9 +94,14 @@ Page({
         got_digg_count: data.got_digg_count,
         follower_count: data.follower_count,
         followee_count: data.followee_count,
-        power: data.power
+        power: data.power,
+
+        post_article_count: data.post_article_count
       }
     })
+
+    this.getCardDatas()
+    this.getPostsData()
   },
   // 卡片数据
   async getCardDatas() {
@@ -106,6 +133,54 @@ Page({
       console.error(error)
     }
   },
+  // 文章数据
+  async getPostsData() {
+    try {
+      // 有最大 20 条的限制，所以只能遍历查询
+      const total = this.data.userDetailsInfo.post_article_count
+      const posts = []
+      for (let page_no = 1; page_no <= Math.ceil(total / 20); page_no++) {
+        const { data } = await getCreatorPosts(page_no)
+        for (let post of data) {
+          posts.push({
+            title: post.article_info.title,
+            article_id: post.article_id,
+            display_count: post.article_info.display_count,
+            view_count: post.article_info.view_count,
+            digg_count: post.article_info.digg_count,
+            collect_count: post.article_info.collect_count,
+            comment_count: post.article_info.comment_count,
+
+            create_time: post.article_info.ctime,
+            category_name: post.category.category_name
+          })
+        }
+      }
+
+      let viewTop = posts.sort((a, b) => b.view_count - a.view_count).slice(0, 10);
+      let diggTop = posts.sort((a, b) => b.digg_count - a.digg_count).slice(0, 10);
+      let commentTop = posts.sort((a, b) => b.comment_count - a.comment_count).slice(0, 10);
+      let collectTop = posts.sort((a, b) => b.collect_count - a.collect_count).slice(0, 10);
+
+      this.setData({ postsTop: { viewTop, diggTop, commentTop, collectTop }, posts })
+    } catch (error) {
+      console.error(error)
+    }
+  },
+
+
+  
+
+  pageToPostDetails(e) {
+    const { post } = e.currentTarget.dataset || e.target.dataset;
+    console.log(post)
+    wx.navigateTo({
+      url: '../postReading/postReading',
+      success(res) {
+        res.eventChannel.emit('continueReading', post)
+      }
+    })
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -131,7 +206,6 @@ Page({
     })
     if (hasLogin) {
       this.getUserDetails()
-      this.getCardDatas()
     }
   },
 

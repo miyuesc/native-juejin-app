@@ -156,35 +156,42 @@
   background-image: url(https://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/162b40efbd71af9a806dd2b54c4580ef.svg);
 }
 
-.dashboard-item.data-cards {
+.dashboard-item.data-cards,
+.dashboard-item.post-top {
   flex-direction: column;
 }
 .data-cards > .dashboard-item_content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 8px;
 }
 .card-item {
-  width: 28%;
+  width: 31%;
   display: flex;
   flex-direction: column;
-  background-color: var(--juejin-gray-2);
+  /* background-color: var(--juejin-gray-2); */
+  border: 1px solid var(--juejin-layer-3-border);
   border-radius: 4px;
-  padding: 4px;
-  gap: 4px;
+  padding: 4px 8px;
+  gap: 1%;
+  line-height: 20px;
+  box-sizing: border-box;
 }
 .card-item_title {
-  color: var(--juejin-font-2);
+  color: var(--juejin-font-3);
   font-size: 12px;
+  line-height: 20px;
 }
 .card-item_value {
   color: var(--juejin-font-1);
   font-size: 20px;
+  line-height: 32px;
 }
 .card-item_than {
   color: var(--juejin-font-2);
   font-size: 10px;
+  line-height: 20px;
   display: flex;
   gap: 4px;
 }
@@ -193,4 +200,36 @@
 }
 .card-item_than-value.down {
   color: var(--juejin-font-danger)
+}
+
+.post-top-item {
+  box-sizing: border-box;
+  padding: 4px 0;
+}
+.post-item-title {
+  font-size: 16px;
+  line-height: 32px;
+  color: var(--juejin-font-1);
+}
+.post-item-ctime {
+  font-size: 10px;
+  line-height: 16px;
+  color: var(--juejin-font-3);
+}
+.post-info-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  color: var(--juejin-font-2);
+  font-size: 12px;
+  border-bottom: 1px solid #eee;
+  padding: 0 8px;
+}
+.footer-item {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  line-height: 24px;
+  gap: 10px;
 }

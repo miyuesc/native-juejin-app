@@ -1,8 +1,6 @@
 import * as echarts from '../../../ec-canvas/echarts';
 import { jpowerGrowth } from '../../../requests/dashboard';
 
-const app = getApp();
-
 function setOption(chart, series, xAxis) {
   const option = {
     tooltip: {
