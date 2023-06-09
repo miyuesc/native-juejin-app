@@ -78,10 +78,8 @@ const pageOptions = {
     if (qurey && qurey.bookId) {
       this.getBookDetails(qurey.bookId)
     } else {
-      bookDetails = {
-        sections: null,
-        currentSectionId: '0'
-      }
+      bookDetails.sections = null
+      bookDetails.currentSectionId = '0'
     }
   },
   // 页面初始化
