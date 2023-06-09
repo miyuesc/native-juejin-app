@@ -50,8 +50,13 @@ const pageOptions = {
 
       this.setData({ introduction: mdObj })
 
+      let currentSectionId = data.booklet.reading_progress.last_section_id
+      if (currentSectionId === '0') {
+        currentSectionId = data.sections[0].section_id || '0'
+      }
+
       bookDetails.sections = data.sections
-      bookDetails.currentSectionId = data.booklet.reading_progress.last_section_id
+      bookDetails.currentSectionId = currentSectionId
     } catch (e) {
       this.setData({ introduction: '' })
     } finally {
@@ -72,6 +77,11 @@ const pageOptions = {
   onLoad(qurey) {
     if (qurey && qurey.bookId) {
       this.getBookDetails(qurey.bookId)
+    } else {
+      bookDetails = {
+        sections: null,
+        currentSectionId: '0'
+      }
     }
   },
   // 页面初始化
