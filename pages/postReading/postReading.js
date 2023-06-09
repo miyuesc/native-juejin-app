@@ -1,4 +1,5 @@
 // pages/postReading/postReading.js
+import { getPostDetails } from "../../requests/posts"
 import { getPageHtml } from "../../utils/request"
 import { getPostContentString } from "../../utils/util"
 
@@ -27,16 +28,18 @@ Page({
       })
       eventChannel.on('continueReading', (post) => {
         wx.setNavigationBarTitle({ title: post.title })
-        getPageHtml(`https://juejin.cn/post/${post.article_id}`).then((res) => {
+        getPostDetails(post.article_id).then((res) => {
 
-          const currentSectionContent = app.towxml(getPostContentString(res.data), 'html', {
+          const mdStr = res.data.article_info.mark_content
+
+          const mdObj = app.towxml(mdStr, 'markdown', {
             events: {
               tap(ev) {
                 const { data } = ev.currentTarget.dataset
                 const { tag, attrs } = data || {}
                 if (tag === 'img') {
                   wx.previewImage({
-                    urls: (currentSectionContent._images || []).map(img => img.src),
+                    urls: (mdObj._images || []).map(img => img.src),
                     current: attrs.src
                   })
                   return;
@@ -52,8 +55,31 @@ Page({
             }
           })
 
+          // const currentSectionContent = app.towxml(getPostContentString(res.data), 'html', {
+          //   events: {
+          //     tap(ev) {
+          //       const { data } = ev.currentTarget.dataset
+          //       const { tag, attrs } = data || {}
+          //       if (tag === 'img') {
+          //         wx.previewImage({
+          //           urls: (currentSectionContent._images || []).map(img => img.src),
+          //           current: attrs.src
+          //         })
+          //         return;
+          //       }
+          //       if (tag === 'navigator') {
+          //         wx.setClipboardData({
+          //           data: attrs.href,
+          //           success: () =>
+          //             wx.showToast({ title: '链接已复制' })
+          //         })
+          //       }
+          //     }
+          //   }
+          // })
+
           this.setData({
-            currentSectionContent
+            currentSectionContent: mdObj
           })
         }).finally(() => wx.hideLoading())
       })

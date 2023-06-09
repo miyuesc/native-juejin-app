@@ -29,5 +29,13 @@ export function getMinePost(params) {
     const app = getApp()
     const user_id = app.globalData.userInfo.user_id
     delete params.cate_id
-    return postData('/content_api/v1/article/query_list', { ...params, user_id }, {aid: 2608, uuid: '7215848128545064463', splider: 0})
+    return postData('/content_api/v1/article/query_list', { ...params, user_id }, { aid: 2608, uuid: '7215848128545064463', splider: 0 })
+}
+
+export function getPostDetails(article_id) {
+    return postData('/content_api/v1/article/detail', {
+        "article_id": article_id,
+        "client_type": 2606,
+        "need_theme": false
+    })
 }

@@ -3,6 +3,7 @@
   /* overflow: hidden; */
   overflow-y: auto;
   position: relative;
+  background-color: #fff;
 }
 
 .section-content {
