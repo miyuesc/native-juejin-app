@@ -181,11 +181,11 @@ Page({
   },
 
   pageToPinDetail(event) {
-    const { pinDetail } = event.currentTarget.dataset || event.target.dataset
-    console.log(pinDetail)
-    wx.navigateTo({
-      url: `../pinDetails/pinDetails?msg_id=${pinDetail.pinId}`,
-    })
+    // const { pinDetail } = event.currentTarget.dataset || event.target.dataset
+    // console.log(pinDetail)
+    // wx.navigateTo({
+    //   url: `../pinDetails/pinDetails?msg_id=${pinDetail.pinId}`,
+    // })
   },
 
   /**
