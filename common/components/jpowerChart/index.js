@@ -17,7 +17,7 @@ function setOption(chart, series, xAxis) {
       left: 10,
       right: 20,
       bottom: 20,
-      top: 30,
+      top: 36,
       containLabel: true
     },
     xAxis: [
@@ -110,6 +110,7 @@ const componentOptions = {
             position: 'top',
             fontSize: 10,
           },
+          itemStyle: { opacity: 0.6 },
           data: increase
         }, {
           name: '创作',

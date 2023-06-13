@@ -54,26 +54,47 @@
     <jpower-chart class="dashboard-item" />
 
     <view class="dashboard-item data-cards">
-      <view class="dashboard-item_title">{{currentDate}}日数据</view>
-      <view class="dashboard-item_content">
-        <view
-          class="card-item"
-          wx:for="{{cards}}"
-          wx:for-item="card"
-          wx:key="index"
-        >
-          <view class="card-item_title">{{cardTitleMap[card.key]}}</view>
-          <view class="card-item_value">{{card.cnt}}</view>
-          <view class="card-item_than">
-            <view class="card-item_than-label">较昨日</view>
-            <view class="card-item_than-value {{card.thanTag}}">
-              <van-icon wx:if="{{card.thanTag==='up'}}" name="arrow-up" />
-              <van-icon wx:if="{{card.thanTag==='down'}}" name="arrow-down" />
-              {{card.than_before || '--'}}
+      <view class="dashboard-item_title">数据分析</view>
+      <van-collapse
+        accordion
+        value="{{ activeName }}"
+        bind:change="onCollapsChange"
+      >
+        <van-collapse-item title="{{currentDate}}日数据" name="1">
+          <view class="dashboard-item_content">
+            <view
+              class="card-item"
+              wx:for="{{yesterdayCards}}"
+              wx:for-item="card"
+              wx:key="index"
+            >
+              <view class="card-item_title">{{cardTitleMap[card.key]}}</view>
+              <view class="card-item_value">{{card.cnt}}</view>
+              <view class="card-item_than">
+                <view class="card-item_than-label">较昨日</view>
+                <view class="card-item_than-value {{card.thanTag}}">
+                  <van-icon wx:if="{{card.thanTag==='up'}}" name="arrow-up" />
+                  <van-icon wx:if="{{card.thanTag==='down'}}" name="arrow-down" />
+                  {{card.than_before || '--'}}
+                </view>
+              </view>
             </view>
           </view>
-        </view>
-      </view>
+        </van-collapse-item>
+        <van-collapse-item title="近七日数据" name="2">
+          <view class="dashboard-item_content">
+            <view
+              class="card-item"
+              wx:for="{{weeklyCards}}"
+              wx:for-item="card"
+              wx:key="index"
+            >
+              <view class="card-item_title">{{card.label}}</view>
+              <view class="card-item_value">{{card.value}}</view>
+            </view>
+          </view>
+        </van-collapse-item>
+      </van-collapse>
     </view>
 
     <view class="dashboard-item post-top">

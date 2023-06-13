@@ -21,6 +21,15 @@ export function getCardDatas(datas, user_id) {
   })
 }
 
+export function getWeeklyCardDatas(datas, item_id, item_type = 1, date_range = 1) {
+  return postData('/content_api/v1/author_center/data/trend', {
+    datas,
+    item_id,
+    item_type,
+    date_range
+  })
+}
+
 export function getCreatorPosts(page_no) {
   return postData('/content_api/v1/article/list_by_user', {
     audit_status: null,

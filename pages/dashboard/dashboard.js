@@ -1,4 +1,4 @@
-import { getCardDatas, getCreatorPosts, getUserDetails } from "../../requests/dashboard";
+import { getCardDatas, getCreatorPosts, getUserDetails, getWeeklyCardDatas } from "../../requests/dashboard";
 import { formatTime } from '../../utils/util'
 
 // pages/dashboard/dashboard.js
@@ -15,7 +15,6 @@ const cardDatas = [
   "all_column_follow",
   "all_follower",
   "incr_active_follower",
-  // "incr_do_follower",
   "incr_undo_follower",
   "incr_follower"
 ]
@@ -35,6 +34,29 @@ const cardTitleMap = {
   "incr_follower": '净增粉丝数'
 }
 
+const weeklyCardDatas = [
+  "incr_article_display",
+  "incr_article_view",
+  "incr_article_digg",
+  "incr_article_comment",
+  "incr_article_collect",
+  "incr_column_follow",
+  "incr_active_follower",
+  "incr_undo_follower",
+  "incr_follower"
+]
+const wekklyCardTitleMap = {
+  "incr_article_display": '展现数',
+  "incr_article_view": '阅读数',
+  "incr_article_digg": '点赞数',
+  "incr_article_comment": '评论数',
+  "incr_article_collect": '收藏数',
+  "incr_column_follow": '专栏关注数',
+  "incr_active_follower": '活跃粉丝数',
+  "incr_undo_follower": '取消关注数',
+  "incr_follower": '净增粉丝数'
+}
+
 Page({
 
   /**
@@ -44,9 +66,12 @@ Page({
     hasLogin: false,
     userId: '',
     userDetailsInfo: null,
-    cards: [],
+    yesterdayCards: [],
+    weeklyCards: [],
     cardTitleMap,
+    wekklyCardTitleMap,
     currentDate: '',
+    activeName: '1',
 
     posts: [],
     postsTopTabs: [{
@@ -101,6 +126,7 @@ Page({
     })
 
     this.getCardDatas()
+    this.getWeeklyCardDatas()
     this.getPostsData()
   },
   // 卡片数据
@@ -112,7 +138,7 @@ Page({
           'userDetailsInfo.got_collection_count': data.datas.all_article_collect.cnt
         })
       }
-      const cards = []
+      const yesterdayCards = []
       for (const key of cardDatas) {
         const thanVal = data.datas[key].than_before
         let thanTag = 'normal'
@@ -121,17 +147,39 @@ Page({
         } else if (thanVal < 0) {
           thanTag = 'down'
         }
-        cards.push({
+        yesterdayCards.push({
           key,
           thanTag,
           ...data.datas[key]
         })
       }
       
-      this.setData({ currentDate: data.date, cards })
+      this.setData({ currentDate: data.date, yesterdayCards })
     } catch (error) {
       console.error(error)
     }
+  },
+  async getWeeklyCardDatas() {
+    try {
+      const { data: {datas} } = await getWeeklyCardDatas(weeklyCardDatas, this.data.userId)
+      const weeklyCards = []
+      for (const key of weeklyCardDatas) {
+        weeklyCards.push({
+          label: wekklyCardTitleMap[key],
+          value: (datas[key] || []).reduce((total, item) => (total += item.cnt), 0)
+        })
+      }
+      this.setData({ weeklyCards })
+      
+    } catch (error) {
+      console.error(error)
+    }
+  },
+
+  onCollapsChange(event) {
+    this.setData({
+      activeName: event.detail,
+    });
   },
   // 文章数据
   async getPostsData() {
@@ -168,8 +216,6 @@ Page({
     }
   },
 
-
-  
 
   pageToPostDetails(e) {
     const { post } = e.currentTarget.dataset || e.target.dataset;

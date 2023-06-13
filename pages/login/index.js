@@ -4,7 +4,6 @@ const pageOptions = {
   // 页面数据
   data: {
     userId: '',
-    uuid: '',
     cookie: ''
   },
   // methods
@@ -13,20 +12,15 @@ const pageOptions = {
       userId: e.detail.value
     })
   },
-  bindUUIdInput(e) {
-    this.setData({
-      uuid: e.detail.value
-    })
-  },
   bindCookieInput(e) {
     this.setData({
       cookie: e.detail.value
     })
   },
   submitForm() {
-    const { userId, uuid, cookie } = this.data
-    app.globalData.userInfo = { hasLogin: true, userId, uuid, cookie }
-    wx.setStorageSync('userInfo', { hasLogin: true, userId, uuid, cookie })
+    const { userId, cookie } = this.data
+    app.globalData.userInfo = { hasLogin: true, userId, cookie }
+    wx.setStorageSync('userInfo', { hasLogin: true, userId, cookie })
     wx.navigateBack({
       delta: 0,
     })

@@ -160,7 +160,7 @@
 .dashboard-item.post-top {
   flex-direction: column;
 }
-.data-cards > .dashboard-item_content {
+.data-cards .dashboard-item_content {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;

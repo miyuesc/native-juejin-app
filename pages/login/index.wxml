@@ -9,13 +9,6 @@
       />
     </view>
     <view class="login-page_form-item">
-      <input
-        value="{{uuid}}"
-        bind:input="bindUUIdInput"
-        placeholder="请输入用户UUId"
-      />
-    </view>
-    <view class="login-page_form-item">
       <textarea
         value="{{cookie}}"
         bind:input="bindCookieInput"
